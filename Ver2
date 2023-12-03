@@ -4347,7 +4347,7 @@ end
     local SliderFastAttack = Tabs.Setting:AddSlider("SliderFastAttack", {
         Title = "Delay Fast Attack",
         Description = "Setting delay for fast attack",
-        Default = 0.175,
+        Default = 0.2,
         Min = 0,
         Max = 5,
         Rounding = 1,
@@ -4358,7 +4358,7 @@ end
     SliderFastAttack:OnChanged(function(Value)
         _G.FastAttackDelay = Value
     end)
-    SliderFastAttack:SetValue(0.175)
+    SliderFastAttack:SetValue(0.2)
 
     local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
     ToggleFastAttack:OnChanged(function(vu)
@@ -4636,7 +4636,7 @@ SliderPosX:SetValue(0)
 local SliderPosY = Tabs.Setting:AddSlider("SliderPosY", {
     Title = "Pos Y",
     Description = "",
-    Default = 60,
+    Default = 35,
     Min = 0,
     Max = 60,
     Rounding = 1,
@@ -4647,7 +4647,7 @@ local SliderPosY = Tabs.Setting:AddSlider("SliderPosY", {
 SliderPosY:OnChanged(function(Value)
   posY = Value
 end)
-SliderPosY:SetValue(60)
+SliderPosY:SetValue(35)
 --------------------------------------------------------------------------------------------------------------------------------------------
 local SliderPosZ = Tabs.Setting:AddSlider("SliderPosZ", {
     Title = "Pos Z",
