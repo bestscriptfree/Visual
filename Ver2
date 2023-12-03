@@ -4351,14 +4351,30 @@ end
         Content = "Setting Farm"
     })
 
+
+
+    local SliderFastAttack = Tabs.Setting:AddSlider("SliderFastAttack", {
+        Title = "Delay Fast Attack",
+        Description = "Setting delay for fast attack",
+        Default = 0.175,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            _G.FastAttackDelay = Value
+        end
+    })
+    SliderFastAttack:OnChanged(function(Value)
+        _G.FastAttackDelay = Value
+    end)
+    SliderFastAttack:SetValue(0.175)
+
     local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
     ToggleFastAttack:OnChanged(function(vu)
         FastAttack = vu
     end)
     Options.ToggleFastAttack:SetValue(true)
 
-
-_G.FastAttackDelay = 0.112
 
     local Client = game.Players.LocalPlayer
     local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
