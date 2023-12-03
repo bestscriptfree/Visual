@@ -3167,7 +3167,7 @@ end)
 
 Tabs.Main:AddParagraph({
     Title = "Misc Farm",
-    Content = "Bone & Cake Prince & "
+    Content = "Bone & Cake Prince & Ectopplasm"
 })
 
 local ToggleBone = Tabs.Main:AddToggle("ToggleBone", {Title = "Auto Farm Bone", Default = false })
@@ -5172,7 +5172,7 @@ end)
 
 Tabs.Fruit:AddParagraph({
     Title = "Esp",
-    Content = ""
+    Content = "Enable Esp"
 })
 
 
@@ -5554,7 +5554,7 @@ end
 
 Tabs.Raid:AddParagraph({
     Title = "Raid Law",
-    Content = ""
+    Content = "Auto buy and spawn boss law"
 })
 
 
@@ -5643,7 +5643,7 @@ Tabs.Race:AddButton({
 
 Tabs.Race:AddParagraph({
     Title = "Auto Race",
-    Content = ""
+    Content = "Tp to door and complete trial"
 })
 
 
@@ -5806,8 +5806,6 @@ spawn(function()
 end)
 
 
-
-
 Tabs.Race:AddParagraph({
     Title = "Misc Race",
     Content = "Auto Farm Acient Quest"
@@ -5823,6 +5821,21 @@ Options.ToggleAutoAcientQuest:SetValue(false)
 
 
 local AcientCframe = CFrame.new(216.211181640625, 126.9352035522461, -12599.0732421875)
+
+
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if AutoFarmAcient then
+                if game.Players.LocalPlayer.Character.RaceTransformed.Value == true then
+                    AutoFarmAcient = false
+                    Tween(CFrame.new(216.211181640625, 126.9352035522461, -12599.0732421875))
+                end
+            end
+        end
+    end)
+end)
 
 
 spawn(function()
