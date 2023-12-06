@@ -2008,27 +2008,29 @@ end
 
 ---------Tween
 
-    
-        --// Tween Island
         function Tween(P1)
-        local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-        if Distance >= 1 then
-        Speed = ChangeSpeed
-        end
-        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
-          CFrame = P1
-        }):Play()
-        if _G.CancelTween2 then
-        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
-          CFrame = P1
-        }):Cancel()
-        end
-        _G.Clip2 = true
-        wait(Distance/Speed)
-        _G.Clip2 = false
-        end
-
-
+            local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+            if Distance >= 1 then
+            Speed = ChangeSpeed
+            end
+            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
+              CFrame = P1
+            }):Play()
+            if _G.StopTween then
+            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
+              CFrame = P1
+            }):Cancel()
+            end
+            end
+            function CancelTween(target)
+            if not target then
+            _G.StopTween = true
+            wait()
+            Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+            wait()
+            _G.StopTween = false
+            end
+            end
 
     
     --function TP to Boat/Ship
