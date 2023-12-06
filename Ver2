@@ -2175,6 +2175,11 @@ function Click()
     game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 end
 
+function ClickCamera()
+    game:GetService("VirtualUser"):CaptureController()
+    game:GetService("VirtualUser"):ClickButton1(Vector2.new(851,158),game:GetService("Workspace").Camera.CFrame)
+    end
+
 --Sword Weapon
 function GetWeaponInventory(Weaponname)
 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
@@ -2783,7 +2788,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
           else
             UseSkillGun = false
             AutoHaki()
-               
+
           EquipTool(SelectWeapon)
           Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
           v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
