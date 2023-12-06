@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "by DauCoGhe",
     TabWidth = 160,
-    Size = UDim2.fromOffset(450, 300),
+    Size = UDim2.fromOffset(500, 400),
     Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
@@ -1976,15 +1976,12 @@ end
 
 ----------Tween
 
-
-
-
     
         --// Tween Island
-        function TP2(P1)
+        function Tween(P1)
         local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
         if Distance >= 1 then
-        Speed = 350
+        Speed = ChangeSpeed
         end
         game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
           CFrame = P1
@@ -2001,20 +1998,6 @@ end
 
 
 
- function Tween(Pos)
-        Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-        if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = true end
-        pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/350, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-        tween:Play()
-        if Distance <= 350 then
-            tween:Cancel()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-        end
-        if _G.StopTween == true then
-            tween:Cancel()
-            _G.Clip = false
-        end
-    end
     
     --function TP to Boat/Ship
     function TPB(CFgo)
@@ -4346,8 +4329,8 @@ end
 
     local SliderFastAttack = Tabs.Setting:AddSlider("SliderFastAttack", {
         Title = "Delay Fast Attack",
-        Description = "Setting delay for fast attack",
-        Default = 0.3,
+        Description = "",
+        Default = 1,
         Min = 0,
         Max = 5,
         Rounding = 1,
@@ -4358,7 +4341,7 @@ end
     SliderFastAttack:OnChanged(function(Value)
       _G.Fast_Delay = Value
     end)
-    SliderFastAttack:SetValue(0.3)
+    SliderFastAttack:SetValue(1)
 
     local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
     ToggleFastAttack:OnChanged(function(vu)
@@ -4665,13 +4648,13 @@ Tabs.Setting:AddParagraph({
     Title = "Setting Distance Farm",
     Content = "Setting your distance for auto farm"
 })
---------------------------------------------------------------------------------------------------------------------------------------------
+
 
 local SliderPosX = Tabs.Setting:AddSlider("SliderPosX", {
     Title = "Pos X",
     Description = "",
     Default = 0,
-    Min = 0,
+    Min = -60,
     Max = 60,
     Rounding = 1,
     Callback = function(Value)
@@ -4682,12 +4665,12 @@ SliderPosX:OnChanged(function(Value)
   posX = Value
 end)
 SliderPosX:SetValue(0)
---------------------------------------------------------------------------------------------------------------------------------------------
+
 local SliderPosY = Tabs.Setting:AddSlider("SliderPosY", {
     Title = "Pos Y",
     Description = "",
     Default = 35,
-    Min = 0,
+    Min = -60,
     Max = 60,
     Rounding = 1,
     Callback = function(Value)
@@ -4698,12 +4681,12 @@ SliderPosY:OnChanged(function(Value)
   posY = Value
 end)
 SliderPosY:SetValue(35)
---------------------------------------------------------------------------------------------------------------------------------------------
+
 local SliderPosZ = Tabs.Setting:AddSlider("SliderPosZ", {
     Title = "Pos Z",
     Description = "",
     Default = 0,
-    Min = 0,
+    Min = -60,
     Max = 60,
     Rounding = 1,
     Callback = function(Value)
@@ -4715,9 +4698,31 @@ SliderPosZ:OnChanged(function(Value)
 end)
 SliderPosZ:SetValue(0)
 
-
-
 --------------------------------------------------------------------------------------------------------------------------------------------
+
+Tabs.Setting:AddParagraph({
+    Title = "Setting Speed",
+    Content = "Setting teleport/tween speed"
+})
+
+local SliderTween = Tabs.Setting:AddSlider("SliderTween", {
+    Title = "Teleport / Tween",
+    Description = "",
+    Default = 250,
+    Min = 100,
+    Max = 1000,
+    Rounding = 1,
+    Callback = function(Value)
+      ChangeSpeed = Value
+    end
+})
+SliderTween:OnChanged(function(Value)
+     ChangeSpeed = Value
+end)
+SliderTween:SetValue(250)
+
+
+
 --Stats
 local ToggleMelee = Tabs.Stats:AddToggle("ToggleMelee", {Title = "Auto Melee", Default = false })
 ToggleMelee:OnChanged(function(Value)
@@ -5311,7 +5316,7 @@ spawn(function()
         if _G.Tweenfruit then
             for i,v in pairs(game.Workspace:GetChildren()) do
                 if string.find(v.Name, "Fruit") then
-                    TP2(v.Handle.CFrame)
+                    Tween(v.Handle.CFrame)
                 end
             end
         end
@@ -5685,7 +5690,7 @@ Tabs.Raid:AddButton({
     Title = "Raid Lab",
     Description = "",
     Callback = function()
-        TP2(CFrame.new(-6438.73535, 250.645355, -4501.50684))
+        Tween(CFrame.new(-6438.73535, 250.645355, -4501.50684))
     end
 })
 elseif Third_Sea then
@@ -5693,7 +5698,7 @@ elseif Third_Sea then
         Title = "Raid Lab",
         Description = "",
         Callback = function()
-            TP2(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
+            Tween(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
         end
     })
 end
@@ -5775,7 +5780,7 @@ Tabs.Race:AddButton({
     Title = "Lever Pull",
     Description = "",
     Callback = function()
-        TP2(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
+        Tween(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
     end
 })
 
@@ -5784,7 +5789,7 @@ Tabs.Race:AddButton({
     Title = "Acient One",
     Description = "",
     Callback = function()
-        TP2(CFrame.new(28981.552734375, 14888.4267578125, -120.245849609375))
+        Tween(CFrame.new(28981.552734375, 14888.4267578125, -120.245849609375))
     end
 })
 
@@ -5808,17 +5813,17 @@ Tabs.Race:AddButton({
                  Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875) 
             wait(0.5)
                     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
-                    TP2(CFrame.new(29221.822265625, 14890.9755859375, -205.99114990234375))
+                    Tween(CFrame.new(29221.822265625, 14890.9755859375, -205.99114990234375))
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                    TP2(CFrame.new(28960.158203125, 14919.6240234375, 235.03948974609375))
+                    Tween(CFrame.new(28960.158203125, 14919.6240234375, 235.03948974609375))
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
-                    TP2(CFrame.new(28231.17578125, 14890.9755859375, -211.64173889160156))
+                    Tween(CFrame.new(28231.17578125, 14890.9755859375, -211.64173889160156))
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
-                    TP2(CFrame.new(28502.681640625, 14895.9755859375, -423.7279357910156))
+                    Tween(CFrame.new(28502.681640625, 14895.9755859375, -423.7279357910156))
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
-                    TP2(CFrame.new(28674.244140625, 14890.6767578125, 445.4310607910156))
+                    Tween(CFrame.new(28674.244140625, 14890.6767578125, 445.4310607910156))
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Mink" then
-                    TP2(CFrame.new(29012.341796875, 14890.9755859375, -380.1492614746094))
+                    Tween(CFrame.new(29012.341796875, 14890.9755859375, -380.1492614746094))
                     end
     end
 })
