@@ -4863,10 +4863,10 @@ end)
     
 Tabs.Player:AddButton({
     Title = "Refresh Dropdown",
-    Description = "Refresh player list",
+    Description = "",
     Callback = function()
         Playerslist = {}
-        SelectedPly:Clear()
+        SelectedPly:clear()
         for i,v in pairs(game:GetService("Players"):GetChildren()) do  
             SelectedPly:Add(v.Name)
         end
@@ -4882,7 +4882,6 @@ ToggleTeleport:OnChanged(function(Value)
         end
     end)
 end)
-
 Options.ToggleTeleport:SetValue(false)
 
 
