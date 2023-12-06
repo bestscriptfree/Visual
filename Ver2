@@ -4060,7 +4060,7 @@ spawn(function()
 
 
 
-    local Togglelockmoon = Tabs.Main:AddToggle("Togglelockmoon", {Title = "Lock Moon", Default = false })
+    local Togglelockmoon = Tabs.Main:AddToggle("Togglelockmoon", {Title = "Lock Moon and Use Race Skill", Default = false })
     Togglelockmoon:OnChanged(function(Value)
         _G.AutoLockMoon = Value
     end) 
@@ -4077,6 +4077,20 @@ spawn(function()
             end)
         end
     end)
+
+    
+    spawn(function()
+        while wait() do
+            pcall(function()
+                if _G.AutoLockMoon then
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"T",false,game)
+                    wait(0.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"T",false,game)
+                end
+            end)
+        end
+    end)
+
 
 local ToggleMirage = Tabs.Main:AddToggle("ToggleMirage", {Title = "Auto Mirage Island", Default = false })
 ToggleMirage:OnChanged(function(Value)
