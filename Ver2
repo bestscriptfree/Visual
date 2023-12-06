@@ -1996,8 +1996,16 @@ for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
     end)
 end
 end
+--------------------------------------------------------------------------------------------------------------------------------------------
+if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
+    game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+end
 
-----------Tween
+if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
+game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
+end
+
+---------Tween
 
     
         --// Tween Island
