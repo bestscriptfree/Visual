@@ -22,6 +22,7 @@ local Tabs = {
     Race = Window:AddTab({ Title = "Race V4", Icon = "chevrons-right" }),
     Shop = Window:AddTab({ Title = "Shop", Icon = "shopping-cart" }),
 	Misc = Window:AddTab({ Title = "Misc", Icon = "list-plus" }),
+    Hop = Window:AddTab({ Title = "Hop", Icon = "wifi" }),
 }
 local Options = Fluent.Options
 
@@ -6556,3 +6557,54 @@ Tabs.Misc:AddButton({
 	end
 })
 --------------------------------------------------------------------------------------------------------------------------------------------
+--Hop
+
+
+local ToggleFindMoon = Tabs.Hop:AddToggle("ToggleFindMoon", {Title = "Find Full Moon", Default = false })
+ToggleFindMoon:OnChanged(function(Value)
+    _G.AutoFindMoon = Value
+end)
+Options.ToggleFindMoon:SetValue(false)
+
+
+spawn(function()
+    while wait() do
+        if _G.AutoFindMoon then
+        if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" or game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
+            wait(2.0)
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
+            Hop()
+            Fluent:Notify({
+                Title = "Fai Fao Hub",
+                Content = "Hop Find Moon...",
+                SubContent = "", -- Optional
+                Duration = 5 -- Set to nil to make the notification not disappear
+            })
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
+            Hop()
+            Fluent:Notify({
+                Title = "Fai Fao Hub",
+                Content = "Hop Find Moon...",
+                SubContent = "", -- Optional
+                Duration = 5 -- Set to nil to make the notification not disappear
+            })
+        elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
+            Hop()
+            Fluent:Notify({
+                Title = "Fai Fao Hub",
+                Content = "Hop Find Moon...",
+                SubContent = "", -- Optional
+                Duration = 5 -- Set to nil to make the notification not disappear
+            })
+        else
+            Hop()
+            end
+        end
+    end
+end)
+
+
+
+
+
+
