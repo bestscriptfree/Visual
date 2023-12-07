@@ -4840,7 +4840,7 @@ Tabs.Player:AddButton({
     Description = "",
     Callback = function()
         Playerslist = {}
-        SelectedPly:refresh()
+        SelectedPly:onClear()
         for i,v in pairs(game:GetService("Players"):GetChildren()) do  
             SelectedPly:Add(v.Name)
         end
