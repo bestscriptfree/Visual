@@ -4,7 +4,7 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 --------------------------------------------------------------------------------------------------------------------------------------------
 local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
-    SubTitle = "by DauCoGhe",
+    SubTitle = "Credits DauCoGhe and Ruagjy",
     TabWidth = 160,
     Size = UDim2.fromOffset(450, 400),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
@@ -28,7 +28,6 @@ local Options = Fluent.Options
 
 do
 --------------------------------------------------------------------------------------------------------------------------------------------
-
 function AntiBan()
     for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
         if v:IsA("LocalScript") then
@@ -46,10 +45,6 @@ function AntiBan()
      end
     end
     AntiBan()
-    
-
-
-
 --------------------------------------------------------------------------------------------------------------------------------------------
     repeat wait() until game.Players
     repeat wait() until game.Players.LocalPlayer
