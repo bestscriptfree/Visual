@@ -4,7 +4,7 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 --------------------------------------------------------------------------------------------------------------------------------------------
 local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
-    SubTitle = "Credits DauCoGhe and Ruagjy",
+    SubTitle = "made by DauCoGhe and Ruagjy",
     TabWidth = 160,
     Size = UDim2.fromOffset(450, 400),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
@@ -6539,7 +6539,6 @@ ToggleMirageIsland:OnChanged(function(Value)
 end)
 Options.ToggleMirageIsland:SetValue(false)
 
-
 spawn(function()
     while wait() do
     if _G.FindMirageIsland then
@@ -6553,6 +6552,7 @@ spawn(function()
         end
     end
 end)
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
