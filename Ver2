@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "by DauCoGhe",
     TabWidth = 160,
-    Size = UDim2.fromOffset(450, 250),
+    Size = UDim2.fromOffset(510, 400),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
@@ -4431,7 +4431,7 @@ end
         if _G.BringMob then
         pcall(function()
           for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-          if not string.find(v.Name,"Boss") and v.Name == MonFarm and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= DistanceBring then
+          if not string.find(v.Name,"Boss") and v.Name == MonFarm and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
           if InMyNetWork(v.HumanoidRootPart) then
             if InMyNetWork(v.HumanoidRootPart) then
           v.HumanoidRootPart.CFrame = FarmPos
@@ -4462,7 +4462,7 @@ end
       if isnetworkowner then
       return isnetworkowner(object)
       else
-        if (object.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= DistanceBring then
+        if (object.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
       return true
       end
       return false
@@ -4621,7 +4621,7 @@ SliderPosZ:SetValue(0)
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 Tabs.Setting:AddParagraph({
-    Title = "Setting Speed and Bring Mob",
+    Title = "Setting Speed",
     Content = "Setting teleport/tween speed"
 })
 
@@ -4640,24 +4640,6 @@ SliderTween:OnChanged(function(Value)
      ChangeSpeed = Value
 end)
 SliderTween:SetValue(250)
-
-
-local SliderBringMob = Tabs.Setting:AddSlider("SliderBringMob", {
-    Title = "Bring Mob",
-    Description = "",
-    Default = 300,
-    Min = 300,
-    Max = 500,
-    Rounding = 1,
-    Callback = function(Value)
-      DistanceBring = Value
-    end
-})
-SliderBringMob:OnChanged(function(Value)
-     DistanceBring = Value
-end)
-SliderBringMob:SetValue(300)
-
 
 --Stats
 local ToggleMelee = Tabs.Stats:AddToggle("ToggleMelee", {Title = "Auto Melee", Default = false })
