@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "by DauCoGhe",
     TabWidth = 160,
-    Size = UDim2.fromOffset(450, 330),
+    Size = UDim2.fromOffset(450, 400),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
@@ -2007,6 +2007,28 @@ game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
 end
 
 ---------Tween
+
+  function Tween2(P1)
+    local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance >= 1 then
+    Speed = 300
+    end
+    game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
+      CFrame = P1
+    }):Play()
+    if _G.CancelTween2 then
+    game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
+      CFrame = P1
+    }):Cancel()
+    end
+    _G.Clip2 = true
+    wait(Distance/Speed)
+    _G.Clip2 = false
+    end
+   
+
+
+
 
         function Tween(P1)
             local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
@@ -5710,7 +5732,7 @@ Tabs.Raid:AddButton({
     Title = "Raid Lab",
     Description = "",
     Callback = function()
-        Tween(CFrame.new(-6438.73535, 250.645355, -4501.50684))
+        Tween2(CFrame.new(-6438.73535, 250.645355, -4501.50684))
     end
 })
 elseif Third_Sea then
@@ -5718,7 +5740,7 @@ elseif Third_Sea then
         Title = "Raid Lab",
         Description = "",
         Callback = function()
-            Tween(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
+            Tween2(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
         end
     })
 end
@@ -5742,7 +5764,7 @@ spawn(function()
         while wait() do
             if Auto_Law then
                 if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Microchip") and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Microchip") and not game:GetService("Workspace").Enemies:FindFirstChild("Order") and not game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
-                    wait(1)
+                    wait(0.3)
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Microchip","1")
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Microchip","2")
                 end
@@ -5753,7 +5775,7 @@ end)
 
 spawn(function()
     pcall(function()
-        while wait(.1) do
+        while wait(0.4) do
             if Auto_Law then
                 if not game:GetService("Workspace").Enemies:FindFirstChild("Order") and not game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
                     if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Microchip") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Microchip") then
