@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "made by DauCoGhe and Ruagjy",
     TabWidth = 160,
-    Size = UDim2.fromOffset(400, 500),
+    Size = UDim2.fromOffset(520, 400),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
@@ -2635,106 +2635,12 @@ coroutine.wrap(YTZCAJC_fake_script)()
 
 
 
-if Third_Sea then
-      local ToggleChest = Tabs.Main:AddToggle("ToggleChest", {Title = "Farm Chest", Default = false })
-      ToggleChest:OnChanged(function(Value)
-        _G.chestsea3 = Value
-      end)
-      Options.ToggleChest:SetValue(false)
-    end
-
-
-    if Second_Sea then
-        local ToggleChest = Tabs.Main:AddToggle("ToggleChest", {Title = "Farm Chest", Default = false })
-        ToggleChest:OnChanged(function(Value)
-          _G.chestsea2 = Value
-        end)
-        Options.ToggleChest:SetValue(false)
-      end
-
-
-      game:GetService('RunService').RenderStepped:connect(function()           
-        if _G.chestsea3 then
-       if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("God's Chalice") then 
-      _G.chestsea3 = false
-                                    
-       elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("God's Chalice") then 
-         if game:GetService("Workspace"):FindFirstChild("Chest1") then
-        TPchest( game:GetService("Workspace"):FindFirstChild("Chest1").CFrame)
-        end
-        if game:GetService("Workspace"):FindFirstChild("Chest2") then
-        TPchest( game:GetService("Workspace"):FindFirstChild("Chest2").CFrame)
-        end
-        if game:GetService("Workspace"):FindFirstChild("Chest3") then
-   TPchest( game:GetService("Workspace"):FindFirstChild("Chest3").CFrame)
-   end
-   end
-   end
-   end)
-   if game.PlaceId == 7449423635 then -- sea3
-   spawn(function()
-       while task.wait(3.5) do
-           pcall(function()
-           if not   game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("God's Chalice") then
-               if _G.chestsea3 then
-                   game:GetService("VirtualInputManager"):SendKeyEvent(true,"Q",false,game)
-               game.Players.LocalPlayer.Character.Humanoid.Health = 0
-               end
-               wait(5)
-               
-              end end) end end) end
-   
-   
-   
-   game:GetService('RunService').RenderStepped:connect(function()           
-        if _G.chestsea2 then
-       if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") then 
-           game:GetService("VirtualInputManager"):SendKeyEvent(true,"Q",false,game)
-      _G.chestsea2 = false
-                                    
-       elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") then 
-         if game:GetService("Workspace"):FindFirstChild("Chest1") then
-        TPchest( game:GetService("Workspace"):FindFirstChild("Chest1").CFrame)
-        end
-        if game:GetService("Workspace"):FindFirstChild("Chest2") then
-        TPchest( game:GetService("Workspace"):FindFirstChild("Chest2").CFrame)
-        end
-        if game:GetService("Workspace"):FindFirstChild("Chest3") then
-   TPchest( game:GetService("Workspace"):FindFirstChild("Chest3").CFrame)
-   end
-   end
-   end
-   end)
-   if game.PlaceId == 4442272183 then -- sea2
-   spawn(function()
-       while task.wait(3.5) do
-           pcall(function()
-           if not   game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") then
-               if _G.chestsea2 then
-               game.Players.LocalPlayer.Character.Humanoid.Health = 0
-               end
-               wait(5)
-               
-              end end) end end) end
-              
-              
-   function TPchest(P1)          
-                       local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-                  if Distance >= 0 then
-                           Speed = 1200000
-                       end
-                       
-                      local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/Speed), {CFrame = P1  }) tween:Play()                                    
-                 end
-   
-      
 
 
 
 
 
-
-
+    
 
       Tabs.Main:AddButton({
         Title = "Redeem All Code",
@@ -4892,18 +4798,7 @@ SelectedPly:OnChanged(function(Value)
     _G.SelectPly = Value
 end)
 
-    
-Tabs.Player:AddButton({
-    Title = "Refresh Dropdown",
-    Description = "",
-    Callback = function()
-        Playerslist = {}
-        SelectedPly:onClear()
-        for i,v in pairs(game:GetService("Players"):GetChildren()) do  
-            SelectedPly:Add(v.Name)
-        end
-    end          
-})
+
 
 local ToggleTeleport = Tabs.Player:AddToggle("ToggleTeleport", {Title = "Teleport To Player", Default = false })
 ToggleTeleport:OnChanged(function(Value)
@@ -4917,7 +4812,6 @@ end)
 Options.ToggleTeleport:SetValue(false)
 
 
-
 local ToggleQuanSat = Tabs.Player:AddToggle("ToggleQuanSat", {Title = "Spectate Player", Default = false })
 ToggleQuanSat:OnChanged(function(Value)
     SpectatePlys = Value
@@ -4929,7 +4823,6 @@ ToggleQuanSat:OnChanged(function(Value)
     game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
 end)
 Options.ToggleQuanSat:SetValue(false)
-
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 --Teleport
