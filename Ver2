@@ -2578,6 +2578,100 @@ coroutine.wrap(YTZCAJC_fake_script)()
         end
         end)
 
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+local ToggleDoubleQuest = Tabs.Main:AddToggle("ToggleDoubleQuest", {Title = "Double Quest", Default = true })
+ToggleDoubleQuest:OnChanged(function(Value)
+    _G.DoubleQuest = Value
+end)
+Options.ToggleDoubleQuest:SetValue(true)
+
+
+        function CheckNotifyComplete()
+            for i, v in pairs(game:GetService("Players")["LocalPlayer"].PlayerGui:FindFirstChild("Notifications"):GetChildren()) do
+                if v.Name == "NotificationTemplate" then
+                    if string.lower(v.Text):find("quest completed") then
+                        pcall(function()
+                            v:Destroy()
+                        end)
+                        return true
+                    end
+                end
+            end
+            return false
+        end
+        
+        local NoLoopDuplicate = false
+        local SubQuest = false
+        local oldmob = Name
+        local oldcheckquest = NameMon
+        
+        task.spawn(function()
+            while wait() do
+                pcall(function()
+                    if _G.AutoLevel then
+                        if _G.DoubleQuest then 
+                            if SubQuest == true then 
+                                if Lv then 
+                                    if tonumber(Lv-1) ~= 0 then 
+                                        CheckOldQuest(tonumber(Lv-1))
+                                    end
+                                end
+                            else
+                                CheckLevel()
+                                oldmob = Name
+                                oldcheckquest = NameMon
+                                spawn(function()
+                                    pcall(function()
+                                        if NoLoopDuplicate == false then 
+                                            if CheckNotifyComplete() and _G.AutoLevel then
+                                                NoLoopDuplicate = true 
+                                                while wait() do
+                                                    SubQuest = true
+                                                    if CheckNotifyComplete() or _G.AutoLevel == false then
+                                                        break;
+                                                    end
+                                                end
+                                                SubQuest = false
+                                                NoLoopDuplicate = false
+                                            end
+                                        end
+                                    end)
+                                end)
+                                if SubQuest == true then  
+                                    if Lv then 
+                                        if tonumber(Lv-1) ~= 0 then 
+                                            CheckOldQuest(tonumber(Lv-1))
+                                        end
+                                    end
+                                end
+                            end
+                        else
+                            CheckLevel()
+                        end
+                    end
+                end)
+            end
+        end)
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
     local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {Title = "Auto Near Mob", Default = false })
     ToggleMobAura:OnChanged(function(Value)
         _G.AutoNear = Value
