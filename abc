@@ -176,7 +176,7 @@ local Logo = Instance.new("ImageLabel")
 	Logo.BackgroundTransparency = 1.000
 	Logo.Position = UDim2.new(0, 10, 0, 0)
 	Logo.Size = UDim2.new(0, 32, 0, 32)
-	Logo.Image = "rbxassetid://13610504970"
+	Logo.Image = "rbxassetid://15575119879"
 
 local Name = Instance.new("TextLabel")
 Name.Parent = Top
@@ -239,7 +239,7 @@ local Logo = Instance.new("ImageLabel")
 	Logo.BackgroundTransparency = 1
 	Logo.Position = UDim2.new(0, 10, 0, 10)
 	Logo.Size = UDim2.new(0, 120, 0, 120)
-	Logo.Image = "rbxassetid://13607406183"
+	Logo.Image = "rbxassetid://15575119879"
 local Tab = Instance.new("Frame")
 Tab.Name = "Tab"
 Tab.Parent = Main
@@ -857,7 +857,7 @@ imgLabelIcon.Name = "Icon"
 				imgLabelIcon.BackgroundTransparency = 1.000
 				imgLabelIcon.Position = UDim2.new(0, 5, 0, 1)
 				imgLabelIcon.Size = UDim2.new(0, 30, 0, 30)
-				imgLabelIcon.Image = "rbxassetid://13610504970" 
+				imgLabelIcon.Image = "rbxassetid://15575119879" 
 
 Title.Parent = Button
 Title.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
@@ -1201,7 +1201,7 @@ end
                 ImageLabel.BorderSizePixel = 0
                 ImageLabel.Position = UDim2.new(0, 7.5, 0, 7.5)
                 ImageLabel.Size = UDim2.new(0, 30, 0, 30)
-                ImageLabel.Image = "rbxassetid://13610504970"
+                ImageLabel.Image = "rbxassetid://15575119879"
                 
                 
                 
@@ -2077,5 +2077,3 @@ end
 return uitab
 end
 return Update
-
-
