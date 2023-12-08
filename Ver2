@@ -6,8 +6,8 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "by DauCoGhe",
     TabWidth = 160,
-    Size = UDim2.fromOffset(500, 400),
-    Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
+    Size = UDim2.fromOffset(510, 350),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
 })
@@ -2625,13 +2625,6 @@ coroutine.wrap(YTZCAJC_fake_script)()
         end
         end)
 
-    if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
-        game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
-    end
-    if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Respawn") then
-        game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
-    end
-
     local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {Title = "Auto Near Mob", Default = false })
     ToggleMobAura:OnChanged(function(Value)
         _G.AutoNear = Value
@@ -2666,7 +2659,6 @@ coroutine.wrap(YTZCAJC_fake_script)()
         end
         end
       end)
-
 
 
       Tabs.Main:AddButton({
@@ -4364,7 +4356,7 @@ end
     local SliderFastAttack = Tabs.Setting:AddSlider("SliderFastAttack", {
         Title = "Delay Fast Attack",
         Description = "",
-        Default = 0.15,
+        Default = 0.2,
         Min = 0,
         Max = 3,
         Rounding = 1,
@@ -4375,7 +4367,7 @@ end
     SliderFastAttack:OnChanged(function(Value)
       _G.FastAttackDelay = Value
     end)
-    SliderFastAttack:SetValue(0.15)
+    SliderFastAttack:SetValue(0.2)
 
 
     local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
@@ -4383,7 +4375,6 @@ end
           _G.FastAttackFaiFao = vu
     end)
     Options.ToggleFastAttack:SetValue(true)
-
 
     local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
     CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
