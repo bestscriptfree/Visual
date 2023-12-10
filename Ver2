@@ -6078,6 +6078,9 @@ Tabs.Shop:AddButton({
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
 	end
 })
+
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------
 --misc
 
@@ -6207,6 +6210,38 @@ Tabs.Misc:AddButton({
         game:GetService("Players").LocalPlayer.PlayerGui.Main.AwakeningToggler.Visible = true
 	end
 })
+
+
+
+Tabs.Misc:AddParagraph({
+	Title = "Troll",
+	Content = "Trolling"
+})
+
+
+
+Tabs.Misc:AddButton({
+	Title = "Rain Fruit",
+	Description = "Rain fruit (Fake)",
+	Callback = function()
+        for i, v in pairs(game:GetObjects("rbxassetid://14759368201")[1]:GetChildren()) do
+            v.Parent = game.Workspace.Map
+            v:MoveTo(game.Players.LocalPlayer.Character.PrimaryPart.Position + Vector3.new(math.random(-50, 50), 100, math.random(-50, 50)))
+            if v.Fruit:FindFirstChild("AnimationController") then
+                v.Fruit:FindFirstChild("AnimationController"):LoadAnimation(v.Fruit:FindFirstChild("Idle")):Play()
+            end
+            v.Handle.Touched:Connect(function(otherPart)
+                if otherPart.Parent == game.Players.LocalPlayer.Character then
+                    v.Parent = game.Players.LocalPlayer.Backpack
+                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+                end
+            end)
+        end
+	end
+})
+
+
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Hop
