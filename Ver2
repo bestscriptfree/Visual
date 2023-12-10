@@ -2757,7 +2757,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
     local SliderHealt = Tabs.Main:AddSlider("SliderHealt", {
         Title = "Health %",
         Description = "Health for mastery",
-        Default = 40,
+        Default = 25,
         Min = 0,
         Max = 100,
         Rounding = 1,
@@ -2770,7 +2770,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
         KillPercent = Value
     end)
 
-    SliderHealt:SetValue(40)
+    SliderHealt:SetValue(25)
     
 	spawn(function()
         while task.wait(.1) do
