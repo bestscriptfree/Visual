@@ -3274,7 +3274,7 @@ spawn(function()
 										EquipTool(SelectWeapon)
 										v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
 										v.HumanoidRootPart.CanCollide = false
-										Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
+										Tween(v.HumanoidRootPart.CFrame * Pos)
 										--Click
 									until _G.CakePrince == false or not v.Parent or v.Humanoid.Health <= 0
 								end    
@@ -4547,7 +4547,7 @@ SliderPosX:SetValue(0)
 local SliderPosY = Tabs.Setting:AddSlider("SliderPosY", {
     Title = "Pos Y",
     Description = "",
-    Default = 35,
+    Default = 30,
     Min = -60,
     Max = 60,
     Rounding = 1,
@@ -4558,7 +4558,7 @@ local SliderPosY = Tabs.Setting:AddSlider("SliderPosY", {
 SliderPosY:OnChanged(function(Value)
   posY = Value
 end)
-SliderPosY:SetValue(35)
+SliderPosY:SetValue(30)
 
 local SliderPosZ = Tabs.Setting:AddSlider("SliderPosZ", {
     Title = "Pos Z",
