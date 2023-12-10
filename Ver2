@@ -6241,7 +6241,17 @@ Tabs.Misc:AddButton({
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Hop
 
+if First_Sea and Second_Sea then
 
+    Tabs.Hop:AddParagraph({
+        Title = "Third Sea Please !!!",
+        Content = "You are in third sea / sea 3"
+    })
+    
+
+end
+
+if Third_Sea then
 local ToggleFindMoon = Tabs.Hop:AddToggle("ToggleFindMoon", {Title = "Find Full Moon", Default = false })
 ToggleFindMoon:OnChanged(function(Value)
     _G.AutoFindMoon = Value
@@ -6305,4 +6315,5 @@ spawn(function()
         end
     end
 end)
+end
 -----------------------------------------------------------------------------------------------------------------------------------------------
