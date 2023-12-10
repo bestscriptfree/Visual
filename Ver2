@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "made by DauCoGhe and Ruagjy very pro",
     TabWidth = 160,
-    Size = UDim2.fromOffset(500, 450),
+    Size = UDim2.fromOffset(530, 350),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Darker",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
@@ -3174,7 +3174,7 @@ Tabs.Main:AddParagraph({
     Title = "Misc Farm",
     Content = "Bone & Cake Prince & Ectopplasm"
 })
-
+if Third_Sea then
 local ToggleBone = Tabs.Main:AddToggle("ToggleBone", {Title = "Auto Bone", Default = false })
 ToggleBone:OnChanged(function(Value)
     _G.AutoBone = Value
@@ -3305,6 +3305,8 @@ spawn(function()
 			end
 		end
     end)
+    end
+    if Second_Sea then
     local ToggleVatChatKiDi = Tabs.Main:AddToggle("ToggleVatChatKiDi", {Title = "Auto Ectoplasm", Default = false })
     ToggleVatChatKiDi:OnChanged(function(Value)
         _G.Ectoplasm = Value
@@ -3348,8 +3350,7 @@ spawn(function()
         end
 
     end)
-
-
+end
 
 
 
@@ -3731,9 +3732,6 @@ if Third_Sea then
 
 
 
-
-
-
      Tabs.Main:AddParagraph({
         Title = "Elite Hunter",
         Content = "Auto find and kill boss elite"
@@ -3802,15 +3800,13 @@ if Third_Sea then
                        end
                    end)
                end
-   
 			   _G.BringMob = true
            end
        end)
-   
     end
 
-if Third_Sea then
 
+if Third_Sea then
        Tabs.Main:AddParagraph({
         Title = "Sea Beast",
         Content = "Auto Kill Sea Beast"
@@ -4081,7 +4077,7 @@ end
         Content = "Auto get items"
     })
 
-
+if Third_Sea then
     local ToggleHallow = Tabs.Main:AddToggle("ToggleHallow", {Title = "Auto Hallow Scythe [Fully]", Default = false })
 
     ToggleHallow:OnChanged(function(Value)
@@ -4219,11 +4215,10 @@ end
                     end
                 end)
             end
-            
+        end
 
 
-
-
+if Second_Sea then
         local ToggleFactory = Tabs.Main:AddToggle("ToggleFactory", {Title = "Auto Farm Factory", Default = false })
         ToggleFactory:OnChanged(function(Value)
             _G.Factory = Value
@@ -4266,6 +4261,7 @@ end
             end
         end)
 
+    end
 
         if Third_Sea then
     local ToggleCakeV2 = Tabs.Main:AddToggle("ToggleCakeV2", {Title = "Kill Dought King [Need Spawn]", Default = false })
@@ -4309,9 +4305,28 @@ end
         end
     end)
 
+    
+if Second_Sea or Third_Sea then
+    local ToggleHakiColor = Tabs.Main:AddToggle("ToggleHakiColor", {Title = "Buy Haki Color",Default = false })
+    ToggleHakiColor:OnChanged(function(Value)
+        _G.Auto_Buy_Enchancement = Value
+    end)
+        Options.ToggleHakiColor:SetValue(false)
+    spawn(function()
+            while wait() do
+                if _G.Auto_Buy_Enchancement then
+                    local args = {
+                        [1] = "ColorsDealer",
+                        [2] = "2"
+                    }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end 
+            end
+        end)
+end
 
-
-    local ToggleSwordLengend = Tabs.Main:AddToggle("ToggleSwordLengend", {Title = "Buy Sword Lengend",Default = false })
+if Second_Sea then
+    local ToggleSwordLengend = Tabs.Main:AddToggle("ToggleSwordLengend", {Title = "Buy Sword Lengendary",Default = false })
     ToggleSwordLengend:OnChanged(function(Value)
         _G.BuyLengendSword = Value
     end)
@@ -4333,15 +4348,13 @@ end
                 end)
             end
         end)
-        
+    end
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Setting
     Tabs.Setting:AddParagraph({
         Title = "Setting",
         Content = "Setting Farm"
     })
-
-
 
  local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
 
@@ -6241,13 +6254,11 @@ Tabs.Misc:AddButton({
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Hop
 
-if First_Sea and Second_Sea then
-
+if First_Sea or Second_Sea then
     Tabs.Hop:AddParagraph({
         Title = "Third Sea Please !!!",
         Content = "You are in third sea / sea 3"
     })
-    
 
 end
 
