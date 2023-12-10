@@ -2194,7 +2194,7 @@ function ClickCamera()
 
 --Click Farm
     function Click()
-        if not _G.Click then
+        if not _G.FastAttackFaiFao then
             local Module = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
             local CombatFramework = debug.getupvalues(Module)[2]
             local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
@@ -4396,7 +4396,7 @@ CamShake:Stop()
         BypassTP = Value
     end)
     Options.ToggleBypassTP:SetValue(false)
-    
+
 
 local ToggleRemove = Tabs.Setting:AddToggle("ToggleRemove", {Title = "Remove Dame Text", Default = true })
 ToggleRemove:OnChanged(function(Value)
