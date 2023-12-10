@@ -4996,7 +4996,7 @@ for i,v in next,Remote_GetFruits do
         table.insert(ShopDevilSell,v.Name)
     end
 end
-_G.SelectFruit = ""
+_G.SelectFruit = "Leopard"
 
 local DropdownFruit = Tabs.Fruit:AddDropdown("DropdownFruit", {
     Title = "Dropdown",
