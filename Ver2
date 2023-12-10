@@ -2192,20 +2192,70 @@ function ClickCamera()
     game:GetService("VirtualUser"):ClickButton1(Vector2.new(851,158),game:GetService("Workspace").Camera.CFrame)
     end
 
---Click Farm
-    function Click()
-        if not _G.FastAttack then
-            local Module = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
-            local CombatFramework = debug.getupvalues(Module)[2]
-            local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-            CamShake:Stop()
-            CombatFramework.activeController.attacking = false
-            CombatFramework.activeController.timeToNextAttack = 0
-            CombatFramework.activeController.hitboxMagnitude = 180
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+------AttackNoCD
+
+    local plr = game.Players.LocalPlayer
+	local CbFw = getupvalues(require(plr.PlayerScripts.CombatFramework))
+	local CbFw2 = CbFw[2]
+
+    function GetCurrentBlade() 
+        local p13 = CbFw2.activeController
+        local ret = p13.blades[1]
+        if not ret then return end
+        while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
+        return ret
+    end
+    
+    function AttackNoCD()
+        if not AutoFarmMasDevilFruit or AutoFarmMasGun then
+            if not Auto_Raid then
+                local AC = CbFw2.activeController
+                for i = 1, 1 do 
+                    local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                        plr.Character,
+                        {plr.Character.HumanoidRootPart},
+                        60
+                    )
+                    local cac = {}
+                    local hash = {}
+                    for k, v in pairs(bladehit) do
+                        if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+                            table.insert(cac, v.Parent.HumanoidRootPart)
+                            hash[v.Parent] = true
+                        end
+                    end
+                    bladehit = cac
+                    if #bladehit > 0 then
+                        local u8 = debug.getupvalue(AC.attack, 5)
+                        local u9 = debug.getupvalue(AC.attack, 6)
+                        local u7 = debug.getupvalue(AC.attack, 4)
+                        local u10 = debug.getupvalue(AC.attack, 7)
+                        local u12 = (u8 * 798405 + u7 * 727595) % u9
+                        local u13 = u7 * 798405
+                        (function()
+                            u12 = (u12 * u9 + u13) % 1099511627776
+                            u8 = math.floor(u12 / u9)
+                            u7 = u12 - u8 * u9
+                        end)()
+                        u10 = u10 + 1
+                        debug.setupvalue(AC.attack, 5, u8)
+                        debug.setupvalue(AC.attack, 6, u9)
+                        debug.setupvalue(AC.attack, 4, u7)
+                        debug.setupvalue(AC.attack, 7, u10)
+                        pcall(function()
+                            if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                                AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
+                                game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                            end
+                        end)
+                    end
+                end
+            end
         end
     end
+
 
 --Attack Mastery
     function NormalAttack()
@@ -2485,8 +2535,29 @@ coroutine.wrap(YTZCAJC_fake_script)()
         Content = "Auto Farm"
     })
 
+
+local listfastattack = {'Normal Attack','Fast Attack','Super Fast Atack'}
+
+    local DropdownDelayAttack = Tabs.Main:AddDropdown("DropdownDelayAttack", {
+        Title = "Select FastAttack",
+        Values = listfastattack,
+        Multi = false,
+        Default = 1,
+    })
+    DropdownDelayAttack:SetValue("Fast Attack")
+    DropdownDelayAttack:OnChanged(function(Value)
+    _G.FastAttackFaiFao_Mode = Value
+	if _G.FastAttackFaiFao_Mode == "Fast Attack" then
+		_G.Fast_Delay = 0.1
+	elseif _G.FastAttackFaiFao_Mode == "Normal Attack" then
+		_G.Fast_Delay = 0.3
+	elseif _G.FastAttackFaiFao_Mode == "Super Fast Attack" then
+		_G.Fast_Delay = 0
+	end
+end)
+
     local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
-        Title = "Dropdown",
+        Title = "Weapon",
         Values = {'Melee','Sword','Blox Fruit'},
         Multi = false,
         Default = 1,
@@ -2564,7 +2635,8 @@ coroutine.wrap(YTZCAJC_fake_script)()
           for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
           if v.Name == Ms then
-          repeat game:GetService("RunService").Heartbeat:wait()
+          repeat wait(_G.Fast_Delay)
+          AttackNoCD()
           AutoHaki()
           EquipTool(SelectWeapon)
           Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -2575,7 +2647,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
           v.HumanoidRootPart.CanCollide = false
           FarmPos = v.HumanoidRootPart.CFrame
           MonFarm = v.Name
-          Click()
+          --Click
           until not _G.AutoLevel or not v.Parent or v.Humanoid.Health <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false
           end   
           end
@@ -2609,7 +2681,8 @@ coroutine.wrap(YTZCAJC_fake_script)()
           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
           if v.Name then
           if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v:FindFirstChild("HumanoidRootPart").Position).Magnitude <= 5000 then
-          repeat task.wait(0.1)
+            repeat wait(_G.Fast_Delay)
+                AttackNoCD()
           AutoHaki()
           EquipTool(SelectWeapon)
           Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -2620,7 +2693,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
           v.HumanoidRootPart.CanCollide = false
           FarmPos = v.HumanoidRootPart.CFrame
           MonFarm = v.Name
-          Click()
+          --Click
           until not _G.AutoNear or not v.Parent or v.Humanoid.Health <= 0 or not game.Workspace.Enemies:FindFirstChild(v.Name)
           end
           end
@@ -3145,7 +3218,8 @@ spawn(function()
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
                                     if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Demonic Soul") then
-                                        repeat task.wait()
+                                        repeat wait(_G.Fast_Delay)
+                                            AttackNoCD()
                                             AutoHaki()
                                             EquipTool(SelectWeapon)
                                                       Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -3157,7 +3231,7 @@ spawn(function()
                                             FarmPos = v.HumanoidRootPart.CFrame
                                             MonFarm = v.Name
                                 
-                                            Click()
+                                            --Click
                                         until not _G.AutoBone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
@@ -3201,13 +3275,14 @@ spawn(function()
 						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
 								if v.Name == "Cake Prince" then
-									repeat wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
 										AutoHaki()
 										EquipTool(SelectWeapon)
 										v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
 										v.HumanoidRootPart.CanCollide = false
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-										Click()
+										--Click
 									until _G.CakePrince == false or not v.Parent or v.Humanoid.Health <= 0
 								end    
 							end    
@@ -3225,7 +3300,7 @@ spawn(function()
 										FarmPos = v.HumanoidRootPart.CFrame
                                         MonFarm = v.Name
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-										Click()
+										--Click
 									until _G.CakePrince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
 								end
 							end
@@ -3251,7 +3326,8 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Ship Steward" or v.Name == "Ship Engineer" or v.Name == "Ship Deckhand" or v.Name == "Ship Officer" and v:FindFirstChild("Humanoid") then
                                 if v.Humanoid.Health > 0 then
-                                    repeat game:GetService("RunService").Heartbeat:wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -3262,7 +3338,7 @@ spawn(function()
                                         v.HumanoidRootPart.CanCollide = false
                                         FarmPos = v.HumanoidRootPart.CFrame
                                         MonFarm = v.Name
-                                        Click()
+                                        --Click
                                     until _G.Ectoplasm == false or not v.Parent or v.Humanoid.Health == 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name)
                                 end
                             end
@@ -3328,7 +3404,8 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == _G.SelectBoss then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -3336,7 +3413,7 @@ spawn(function()
                                         v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                             
-                                       Click()
+                                       --Click
 									   _G.BringMob = false
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     until not _G.AutoBoss or not v.Parent or v.Humanoid.Health <= 0
@@ -3366,14 +3443,15 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == _G.SelectBoss then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                        Click()
+                                        --Click
 										_G.BringMob = false
                                     until not _G.AutoBoss or not v.Parent or v.Humanoid.Health <= 0
                                 end
@@ -3445,7 +3523,8 @@ spawn(function()
           for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
           if v.Name == MMon then
-          repeat task.wait()
+            repeat wait(_G.Fast_Delay)
+                AttackNoCD()
           AutoHaki()
           EquipTool(SelectWeapon)
           Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -3457,7 +3536,7 @@ spawn(function()
           FarmPos = v.HumanoidRootPart.CFrame
           MonFarm = v.Name
   
-          Click()
+          --Click
           until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
           end
           end
@@ -3492,22 +3571,23 @@ if Third_Sea then
     Options.ToggleTerrorshark:SetValue(false)
     spawn(function()
         while wait() do
-            if  _G.AutoTerrorshark then
+            if _G.AutoTerrorshark then
                 pcall(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Terrorshark" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             
-                                        Click()
+                                        --Click
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                    until not  _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
+                                    until not _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
                         end
@@ -3535,22 +3615,23 @@ if Third_Sea then
 
      spawn(function()
         while wait() do
-            if  _G.farmpiranya then
+            if _G.farmpiranya then
                 pcall(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Piranha" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                             
-                                        Click()
+                                        --Click
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                    until not  _G.farmpiranya or not v.Parent or v.Humanoid.Health <= 0
+                                    until not _G.farmpiranya or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
                         end
@@ -3576,13 +3657,14 @@ if Third_Sea then
      Options.ToggleShark:SetValue(false)
      spawn(function()
         while wait() do
-            if  _G.AutoShark then
+            if _G.AutoShark then
                 pcall(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Shark" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -3624,7 +3706,8 @@ if Third_Sea then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Fish Crew Member" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -3680,7 +3763,8 @@ if Third_Sea then
                                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                            if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
-                                               repeat task.wait()
+                                            repeat wait(_G.Fast_Delay)
+                                                AttackNoCD()
                                                    EquipTool(SelectWeapon)
                                                    AutoHaki()
                                                    Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -3690,7 +3774,7 @@ if Third_Sea then
                                                    v.Humanoid.WalkSpeed = 0
                                                    v.HumanoidRootPart.CanCollide = false
                                        
-                                                   Click()
+                                                   --Click
                                                    FarmPos = v.HumanoidRootPart.CFrame
                                                    MonFarm = v.Name
                                                    v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -4018,7 +4102,8 @@ end
                     if game:GetService("Workspace").Enemies:FindFirstChild("Soul Reaper") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if string.find(v.Name , "Soul Reaper") then
-                                repeat task.wait()
+                                repeat wait(_G.Fast_Delay)
+                                    AttackNoCD()
                                     AutoHaki()
                                     EquipTool(SelectWeapon)
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
@@ -4026,7 +4111,7 @@ end
                                     v.HumanoidRootPart.Transparency = 1
                                     sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                         
-									Click()
+									--Click
                                 until v.Humanoid.Health <= 0 or AutoHallowSycthe == false
                             end
                         end
@@ -4091,14 +4176,15 @@ end
                                    if game:GetService("Workspace").Enemies:FindFirstChild("Longma") then
                                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                            if v.Name == ("Longma" or v.Name == "Longma") and v.Humanoid.Health > 0 and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-                                               repeat wait()
+                                            repeat wait(_G.Fast_Delay)
+                                                AttackNoCD()
                                                    AutoHaki()
                                                    if not game.Players.LocalPlayer.Character:FindFirstChild(SelectWeapon) then
                                                        wait()
                                                        EquipTool(SelectWeapon)
                                                    end
                                                    FarmPos = v.HumanoidRootPart.CFrame
-                                                     Click()
+                                                     --Click
                                                    v.HumanoidRootPart.Size = Vector3.new(60,60,60)
                                                    v.Humanoid.JumpPower = 0
                                                    v.Humanoid.WalkSpeed = 0
@@ -4157,7 +4243,8 @@ end
                     if game.Workspace.Enemies:FindFirstChild("Core") then
                         for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
                             if v.Name == "Core" and v.Humanoid.Health > 0 then
-                                repeat wait(.1)
+                                repeat wait(_G.Fast_Delay)
+                                    AttackNoCD()
                                     repeat Tween(CFrame.new(448.46756, 199.356781, -441.389252))
                                         wait()
                                     until not _G.Factory or (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-Vector3.new(448.46756, 199.356781, -441.389252)).Magnitude <= 10
@@ -4172,7 +4259,7 @@ end
                                     FarmPos = v.HumanoidRootPart.CFrame
                                     MonFarm = v.Name
                         
-                                    Click()
+                                    --Click
                                 until not v.Parent or v.Humanoid.Health <= 0  or _G.Factory == false
                             end
                         end
@@ -4202,14 +4289,15 @@ end
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Dough King" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                        Click()
+                                        --Click
                                         sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                     until not _G.AutoCakeV2 or not v.Parent or v.Humanoid.Health <= 0
                                 end
@@ -4229,7 +4317,30 @@ end
     end)
 
 
-   
+
+    local ToggleSwordLengend = Tabs.Main:AddToggle("ToggleSwordLengend", {Title = "Buy Sword Lengend",Default = false })
+    ToggleSwordLengend:OnChanged(function(Value)
+        _G.BuyLengendSword = Value
+    end)
+        Options.ToggleSwordLengend:SetValue(false)
+
+        spawn(function()
+            while wait(.1) do
+                pcall(function()
+                    if _G.BuyLengendSword or Triple_A then
+                        local args = {
+                            [1] = "LegendarySwordDealer",
+                            [2] = "2"
+                        }
+                        -- Triple_A
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                    else
+                        wait(2)
+                    end
+                end)
+            end
+        end)
+        
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Setting
     Tabs.Setting:AddParagraph({
@@ -4237,111 +4348,31 @@ end
         Content = "Setting Farm"
     })
 
-    local SliderFastAttack = Tabs.Setting:AddSlider("SliderFastAttack", {
-        Title = "Delay Fast Attack",
-        Description = "",
-        Default = 0.2,
-        Min = 0,
-        Max = 3,
-        Rounding = 1,
-        Callback = function(Value)
-          _G.FastAttackDelay = Value
-        end
-    })
-    SliderFastAttack:OnChanged(function(Value)
-      _G.FastAttackDelay = Value
-    end)
-    SliderFastAttack:SetValue(0.2)
 
-    local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
-    ToggleFastAttack:OnChanged(function(vu)
-          _G.FastAttackFaiFao = vu
+
+ local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
+
+    ToggleFastAttack:OnChanged(function(Value)
+     _G.FastAttackFaiFao = Value
     end)
     Options.ToggleFastAttack:SetValue(true)
-    local Client = game.Players.LocalPlayer
-    local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
-    local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-    spawn(function()
-        while task.wait() do
-            pcall(function()
-                if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
-                if not shared.cpc then shared.cpc = STOP.play end
-                    STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-                    local Hits = STOPRL.getBladeHits(b,c,d)
-                    if Hits then
-                        if _G.FastAttackFaiFao then
-                            STOP.play = function() end
-                            a:Play(0.01,0.01,0.01)
-                            func(Hits)
-                            STOP.play = shared.cpc
-                            wait(a.length * 0.5)
-                            a:Stop()
-                        else
-                            a:Play()
-                        end
-                    end
-                end
-            end)
-        end
-    end)
 
-function GetBladeHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local p13 = CmrFwLib.activeController
-    local weapon = p13.blades[1]
-    if not weapon then 
-        return weapon
-    end
-    while weapon.Parent ~= game.Players.LocalPlayer.Character do
-        weapon = weapon.Parent 
-    end
-    return weapon
-end
-function AttackHit()
-    local CombatFrameworkLib = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
-    local CmrFwLib = CombatFrameworkLib[2]
-    local plr = game.Players.LocalPlayer
-    for i = 1, 1 do
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(plr.Character,{plr.Character.HumanoidRootPart},60)
-        local cac = {}
-        local hash = {}
-        for k, v in pairs(bladehit) do
-            if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-                table.insert(cac, v.Parent.HumanoidRootPart)
-                hash[v.Parent] = true
-            end
-        end
-        bladehit = cac
-        if #bladehit > 0 then
-            pcall(function()
-                CmrFwLib.activeController.timeToNextAttack = 1
-                CmrFwLib.activeController.attacking = false
-                CmrFwLib.activeController.blocking = false
-                CmrFwLib.activeController.timeToNextBlock = 0
-                CmrFwLib.activeController.increment = 3
-                CmrFwLib.activeController.hitboxMagnitude = 60
-                CmrFwLib.activeController.focusStart = 0
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetBladeHit()))
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
-            end)
-        end
-    end
-end
 spawn(function()
-    while wait(.1) do
-        if _G.FastAttackFaiFao then
-            pcall(function()
-                repeat task.wait(_G.FastAttackDelay)
-                    AttackHit()
-                until not _G.FastAttackFaiFao
-            end)
-        end
-    end
+	while wait(.5) do
+		pcall(function()
+			if _G.FastAttackFaiFao then
+				repeat wait(_G.Fast_Delay)
+					AttackNoCD()
+				until not _G.FastAttackFaiFao
+			end
+		end)
+	end
 end)
+local Camera = require(game.ReplicatedStorage.Util.CameraShaker)
+Camera:Stop()
 
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
+
+
 
     local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title = "Bring Mob", Default = true })
     ToggleBringMob:OnChanged(function(Value)
@@ -5575,7 +5606,7 @@ spawn(function()
                                               Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                     v.HumanoidRootPart.CanCollide = false
                                     v.HumanoidRootPart.Size = Vector3.new(120, 120, 120)
-                                    Click()
+                                    --Click
                                 until not v.Parent or v.Humanoid.Health <= 0 or Auto_Law == false
                             end
                         end
@@ -5829,7 +5860,7 @@ spawn(function()
                                     v.Head.CanCollide = false 
                                     FarmPos = v.HumanoidRootPart.CFrame
                                               Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                    Click()
+                                    --Click
                                 until not AutoFarmAcient or not v.Parent or v.Humanoid.Health <= 0
                                 BringAcient = false
                             end
