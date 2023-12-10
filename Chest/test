@@ -1,0 +1,317 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/JohnBardot/GlitchDrawingLibrary/main/DrawingLibrary"))()
+
+local Window = Library:CreateWindow("Fai Fao Hub")
+local Tab = Window:CreateTab("Main")
+
+local Section = Tab:CreateSection("")
+
+Section:CreateButton("Auto Farm Chest",function()
+    _G.Chest = true
+    for i,v in pairs(workspace:GetChildren()) do
+        if string.find(v.Name, "Chest") then
+            while _G.Chest do
+                workspace[v.Name].CanCollide = false
+                wait(0.01)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace[v.Name].CFrame
+            end
+        end
+    end
+end)
+
+
+Section:CreateButton("Chest Hop",function()
+--Server Hop Script cr.Magma Hub Src
+local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+--[[
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+]]
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            -- delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    -- writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+    end
+end
+
+Teleport()
+end)
+
+local Tab = Window:CreateTab("Esp")
+local Section = Tab:CreateSection("")
+
+Section:CreateButton("Skeleton Esp + Name Above",function()
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/JohnBardot/GlitchDrawingLibrary/main/DrawingLibrary"))()
+
+local Window = Library:CreateWindow("Fai Fao Hub")
+local Tab = Window:CreateTab("Main")
+
+local Section = Tab:CreateSection("")
+
+Section:CreateButton("Auto Collect Chest",function()
+    _G.Chest = true
+    for i,v in pairs(workspace:GetChildren()) do
+        if string.find(v.Name, "Chest") then
+            while _G.Chest do
+                workspace[v.Name].CanCollide = false
+                wait(0.01)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace[v.Name].CFrame
+            end
+        end
+    end
+end)
+
+
+Section:CreateButton("Chest Hop",function()
+local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+--[[
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+]]
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            -- delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    -- writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+    end
+end
+
+Teleport()
+end)
+
+local Tab = Window:CreateTab("Esp")
+local Section = Tab:CreateSection("")
+
+Section:CreateButton("Name Esp",function()
+    local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+
+local function createNameTag(player)
+    local tag = Instance.new("BillboardGui")
+    tag.Name = "NameTag"
+    tag.AlwaysOnTop = true
+    tag.Size = UDim2.new(0, 100, 0, 20)
+    tag.StudsOffset = Vector3.new(0, 3, 0)
+    tag.Adornee = player.Character.Head
+
+    local label = Instance.new("TextLabel")
+    label.Name = "Label"
+    label.BackgroundTransparency = 1
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.Text = player.Name
+    label.Font = Enum.Font.SourceSansBold
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextSize = 14
+    label.Parent = tag
+
+    tag.Parent = Camera
+end
+
+local function removeNameTag(player)
+    local tag = Camera:FindFirstChild(player.Name)
+    if tag and tag:IsA("BillboardGui") then
+        tag:Destroy()
+    end
+end
+
+local function updateNameTags()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local tag = Camera:FindFirstChild(player.Name)
+            if not tag then
+                createNameTag(player)
+            end
+        else
+            removeNameTag(player)
+        end
+    end
+end
+
+-- Create name tags for existing players
+for _, player in ipairs(Players:GetPlayers()) do
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        createNameTag(player)
+    end
+end
+
+-- Update name tags when new players join or leave
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        if character:FindFirstChild("HumanoidRootPart") then
+            createNameTag(player)
+        end
+    end)
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    removeNameTag(player)
+end)
+
+-- Update name tags every frame
+RunService.RenderStepped:Connect(updateNameTags)
+
+end)
+
+
+local Tab = Window:CreateTab("Setting")
+local Section = Tab:CreateSection("")
+
+Section:CreateButton("Close Gui",function()
+-- rejoin		
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+ 
+local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+ 
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+ 
+coroutine.resume(Rejoin)
+end)
+end)
+
+
+local Tab = Window:CreateTab("Setting")
+local Section = Tab:CreateSection("")
+
+Section:CreateButton("Close Gui",function()
+-- rejoin		
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+ 
+local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+ 
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+ 
+coroutine.resume(Rejoin)
+end)
