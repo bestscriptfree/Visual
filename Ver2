@@ -2539,7 +2539,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
 local listfastattack = {'Normal Attack','Fast Attack','Super Fast Attack'}
 
     local DropdownDelayAttack = Tabs.Main:AddDropdown("DropdownDelayAttack", {
-        Title = "Select FastAttack",
+        Title = "Select Fast Attack",
         Values = listfastattack,
         Multi = false,
         Default = 1,
@@ -2550,7 +2550,7 @@ local listfastattack = {'Normal Attack','Fast Attack','Super Fast Attack'}
 	if _G.FastAttackFaiFao_Mode == "Fast Attack" then
 		_G.Fast_Delay = 0.15
 	elseif _G.FastAttackFaiFao_Mode == "Normal Attack" then
-		_G.Fast_Delay = 0.3
+		_G.Fast_Delay = 0.2
 	elseif _G.FastAttackFaiFao_Mode == "Super Fast Attack" then
 		_G.Fast_Delay = 0
 	end
