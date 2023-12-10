@@ -2085,7 +2085,7 @@ end
 function EquipTool(ToolSe)
 		if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
 			local tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
-			wait(0.4)
+			wait(1.3)
 			game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
 		end
 	end
@@ -3181,6 +3181,7 @@ ToggleBone:OnChanged(function(Value)
 end)
 Options.ToggleBone:SetValue(false)
 local BoneCFrame = CFrame.new(-9515.75, 174.8521728515625, 6079.40625)
+local BoneCFrame2 = CFrame.new(-9359.453125, 141.32679748535156, 5446.81982421875)
 
 
 spawn(function()
@@ -3194,8 +3195,8 @@ spawn(function()
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                     if BypassTP then
                         wait()
-                       if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneCFrame.Position).Magnitude > 2500 then
-                       BTP(BoneCFrame)
+                       if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneCFrame2.Position).Magnitude > 2500 then
+                       BTP(BoneCFrame2)
                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneCFrame.Position).Magnitude < 2500 then
                        Tween(BoneCFrame)
                        end
