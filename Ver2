@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "made by DauCoGhe and Ruagjy",
     TabWidth = 160,
-    Size = UDim2.fromOffset(400, 350),
+    Size = UDim2.fromOffset(450, 400),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Darker",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
@@ -2554,7 +2554,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
           elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQ.Position).Magnitude < 2500 then
           Tween(CFrameQ)
           end
-    else
+         else
             Tween(CFrameQ)
             end
           if (CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
