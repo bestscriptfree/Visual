@@ -4277,16 +4277,15 @@ end
 
 
         if Third_Sea then
-        local ToggleCakeV2 = Tabs.Main:AddToggle("ToggleCakeV2", {Title = "Kill Dought King [Need Spawn]", Default = false })
-        ToggleCakeV2:OnChanged(function(Value)
-  
-        end)
+    local ToggleCakeV2 = Tabs.Main:AddToggle("ToggleCakeV2", {Title = "Kill Dought King [Need Spawn]", Default = false })
+    ToggleCakeV2:OnChanged(function(Value)
+        _G.AutoCakeV2 = Value
+    end)
         Options.ToggleCakeV2:SetValue(false)
-    end
-
+end
     spawn(function()
         while wait() do
-            if  _G.AutoCakeV2 then
+            if _G.AutoCakeV2 then
                 pcall(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -4301,14 +4300,14 @@ end
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                         Click()
                                         sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                                    until not  _G.AutoCakeV2 or not v.Parent or v.Humanoid.Health <= 0
+                                    until not _G.AutoCakeV2 or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
                         end
                     else
                     Tween(CFrame.new(-2662.818603515625, 1062.3480224609375, -11853.6953125))
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") then
-                            Tween(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                     Tween(game:GetService("ReplicatedStorage"):FindFirstChild("Dough King").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
                         else
                         end
             
@@ -4342,7 +4341,6 @@ end
       _G.FastAttackDelay = Value
     end)
     SliderFastAttack:SetValue(0.2)
-
 
     local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
     ToggleFastAttack:OnChanged(function(vu)
