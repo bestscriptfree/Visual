@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     Title = "Fai Fao Hub",
     SubTitle = "made by DauCoGhe and Ruagjy very pro",
     TabWidth = 160,
-    Size = UDim2.fromOffset(450, 400),
+    Size = UDim2.fromOffset(550, 420),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Darker",
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
@@ -2536,7 +2536,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
     })
 
 
-local listfastattack = {'Normal Attack','Fast Attack','Super Fast Atack'}
+local listfastattack = {'Normal Attack','Fast Attack','Super Fast Attack'}
 
     local DropdownDelayAttack = Tabs.Main:AddDropdown("DropdownDelayAttack", {
         Title = "Select FastAttack",
@@ -2548,7 +2548,7 @@ local listfastattack = {'Normal Attack','Fast Attack','Super Fast Atack'}
     DropdownDelayAttack:OnChanged(function(Value)
     _G.FastAttackFaiFao_Mode = Value
 	if _G.FastAttackFaiFao_Mode == "Fast Attack" then
-		_G.Fast_Delay = 0.1
+		_G.Fast_Delay = 0.15
 	elseif _G.FastAttackFaiFao_Mode == "Normal Attack" then
 		_G.Fast_Delay = 0.3
 	elseif _G.FastAttackFaiFao_Mode == "Super Fast Attack" then
@@ -6312,6 +6312,3 @@ spawn(function()
     end
 end)
 -----------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
