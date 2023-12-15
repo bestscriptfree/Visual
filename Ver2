@@ -2542,10 +2542,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
 -- Hehe
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Create Tabs
-    Tabs.Main:AddParagraph({
-        Title = "Farming",
-        Content = "Auto Farm"
-    })
+local Farming = Tabs.Main:AddSection("Farming")
 
 
 local listfastattack = {'Normal Attack','Fast Attack','Super Fast Attack'}
@@ -2618,11 +2615,12 @@ end)
         end
     end)
 
-    local ToggleAutoFarmLevel = Tabs.Main:AddToggle("ToggleAutoFarmLevel", {Title = "Auto Level", Default = false })
-    ToggleAutoFarmLevel:OnChanged(function(Value)
+
+    local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {Title = "Auto Level", Default = false })
+    ToggleLevel:OnChanged(function(Value)
         _G.AutoLevel = Value
     end)
-    Options.ToggleAutoFarmLevel:SetValue(false)
+    Options.ToggleLevel:SetValue(false)
     spawn(function()
         while task.wait() do
         if _G.AutoLevel then
@@ -2800,10 +2798,7 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Mastery
-    Tabs.Main:AddParagraph({
-        Title = "Mastery Farm",
-        Content = "Auto farm your mastery"
-    })
+local Mastery = Tabs.Main:AddSection("Mastery Farm")
 
     local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
         Title = "Mastery Mode",
@@ -3180,10 +3175,8 @@ end
 end)
 	
 
-Tabs.Main:AddParagraph({
-    Title = "Misc Farm",
-    Content = "Bone & Cake Prince & Ectopplasm"
-})
+local MiscFarm = Tabs.Main:AddSection("Misc Farm")
+
 if Third_Sea then
 local ToggleBone = Tabs.Main:AddToggle("ToggleBone", {Title = "Auto Bone", Default = false })
 ToggleBone:OnChanged(function(Value)
@@ -3365,11 +3358,7 @@ end
 
 
 
-
-    Tabs.Main:AddParagraph({
-        Title = "Boss Farm",
-        Content = ""
-    })
+local boss = Tabs.Main:AddSection("Boss Farm")
 
 
     if First_Sea then
@@ -3473,10 +3462,7 @@ end
         end
     end)
 
-    Tabs.Main:AddParagraph({
-        Title = "Material",
-        Content = "Auto farm material"
-    })
+    local Material = Tabs.Main:AddSection("Material Farm")
 
     if First_Sea then
         MaterialList = {
@@ -3562,11 +3548,7 @@ end
       end)
 if Third_Sea then
 
-      Tabs.Main:AddParagraph({
-        Title = "Rough Sea",
-        Content = "Auto rough sea"
-    })
-
+    local RoughSea = Tabs.Main:AddSection("Rough Sea")
 
     local ToggleSailBoat = Tabs.Main:AddToggle("ToggleSailBoat", {Title = "Sail Boat", Default = false })
 
@@ -3806,12 +3788,7 @@ if Third_Sea then
     end)
 
 
-
-     Tabs.Main:AddParagraph({
-        Title = "Elite Hunter",
-        Content = "Auto find and kill boss elite"
-    })
-
+    local AutoElite = Tabs.Main:AddSection("Eltie Hunter Farm")
 
     local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title = "Auto Elite Hunter", Default = false })
 
@@ -3882,10 +3859,7 @@ if Third_Sea then
 
 
 if Third_Sea then
-       Tabs.Main:AddParagraph({
-        Title = "Sea Beast",
-        Content = "Auto Kill Sea Beast"
-    })
+    local Sea = Tabs.Main:AddSection("Sea Beast")
 
 
 local ToggleSeaBeAst = Tabs.Main:AddToggle("ToggleSeaBeAst", {Title = "Auto Sea Beast", Default = false })
@@ -4021,10 +3995,7 @@ ToggleAutoW:OnChanged(function(Value)
 
 
 
- Tabs.Main:AddParagraph({
-    Title = "Mirage Island",
-    Content = "Auto Mirage Island"
-})
+    local AutoMysticIsland = Tabs.Main:AddSection("Mirage Island")
 
 local ToggleTweenMirageIsland = Tabs.Main:AddToggle("ToggleTweenMirageIsland", {Title = "Tween To Mirage Island", Default = false })
 ToggleTweenMirageIsland:OnChanged(function(Value)
@@ -4128,11 +4099,7 @@ end)
     end)
 end
 
-
-     Tabs.Main:AddParagraph({
-        Title = "Items",
-        Content = "Auto get items"
-    })
+local Items = Tabs.Main:AddSection("Items Farm")
 
 if Third_Sea then
     local ToggleHallow = Tabs.Main:AddToggle("ToggleHallow", {Title = "Auto Hallow Scythe [Fully]", Default = false })
@@ -4408,10 +4375,7 @@ if Second_Sea then
     end
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Setting
-    Tabs.Setting:AddParagraph({
-        Title = "Setting",
-        Content = "Setting Farm"
-    })
+local SettingFarm = Tabs.Setting:AddSection("Setting Farming")
 
  local ToggleFastAttack = Tabs.Setting:AddToggle("ToggleFastAttack", {Title = "Fast Attack", Default = true })
 
@@ -4541,10 +4505,7 @@ ToggleRemoveNotify:OnChanged(function(Value)
 
 
 
-Tabs.Setting:AddParagraph({
-    Title = "Setting Skill",
-    Content = "Skill use for farm mastery"
-})
+        local SKill = Tabs.Setting:AddSection("Skill Mastery")
 
 local ToggleZ = Tabs.Setting:AddToggle("ToggleZ", {Title = "Skill Z", Default = true })
 ToggleZ:OnChanged(function(Value)
@@ -4580,10 +4541,7 @@ ToggleF:OnChanged(function(Value)
 Options.ToggleF:SetValue(true)
 
 
-Tabs.Setting:AddParagraph({
-    Title = "Setting Distance Farm",
-    Content = "Setting your distance for auto farm"
-})
+local Pos = Tabs.Setting:AddSection("Distance Farm")
 
 local SliderPosX = Tabs.Setting:AddSlider("SliderPosX", {
     Title = "Pos X",
@@ -4635,10 +4593,7 @@ SliderPosZ:SetValue(0)
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-Tabs.Setting:AddParagraph({
-    Title = "Setting Speed",
-    Content = "Setting teleport/tween speed"
-})
+local SettingTweenSpeed = Tabs.Setting:AddSection("Setting Tween Speed")
 
 local SliderTween = Tabs.Setting:AddSlider("SliderTween", {
     Title = "Teleport / Tween",
@@ -4815,10 +4770,7 @@ Options.ToggleQuanSat:SetValue(false)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 --Teleport
-Tabs.Teleport:AddParagraph({
-    Title = "World",
-    Content = "Sea1 & Sea2 & Sea3"
-})
+local Teleport = Tabs.Teleport:AddSection("Teleport World")
 
 Tabs.Teleport:AddButton({
     Title = "First Sea",
@@ -4850,10 +4802,7 @@ Tabs.Teleport:AddButton({
 
 
 
-Tabs.Teleport:AddParagraph({
-    Title = "Island",
-    Content = "Teleport to Island"
-})
+local Mastery = Tabs.Teleport:AddSection("Teleport Island")
 
 if First_Sea then
  IslandList = {
@@ -5242,10 +5191,7 @@ spawn(function()
 end
 end)
 
-Tabs.Fruit:AddParagraph({
-    Title = "Esp",
-    Content = "Enable Esp"
-})
+local Mastery = Tabs.Fruit:AddSection("Esp")
 
 
 local ToggleEspPlayer = Tabs.Fruit:AddToggle("ToggleEspPlayer", {Title = "Esp Player", Default = false })
@@ -5624,10 +5570,7 @@ end
 
 
 
-Tabs.Raid:AddParagraph({
-    Title = "Raid Law",
-    Content = "Auto buy and spawn boss law"
-})
+local Mastery = Tabs.Raid:AddSection("Law Raid")
 
 
 local ToggleLaw = Tabs.Raid:AddToggle("ToggleLaw", {Title = "Auto Law", Default = false })
@@ -5714,10 +5657,7 @@ Tabs.Race:AddButton({
 })
 
 
-Tabs.Race:AddParagraph({
-    Title = "Auto Race",
-    Content = "Tp to door and complete trial"
-})
+local Mastery = Tabs.Race:AddSection("Auto Race")
 
 
 Tabs.Race:AddButton({
@@ -5879,10 +5819,7 @@ spawn(function()
 end)
 
 
-Tabs.Race:AddParagraph({
-    Title = "Misc Race",
-    Content = "Auto Farm Acient Quest"
-})
+local Mastery = Tabs.Race:AddSection("Farm Acient Quest")
 
 
 
@@ -6039,12 +5976,7 @@ Tabs.Shop:AddButton({
 	end
 })
 
-
-Tabs.Shop:AddParagraph({
-	Title = "Fighting Style",
-	Content = "Buy fighting style"
-})
-
+local Mastery = Tabs.Shop:AddSection("Fighting Styles")
 
 
 Tabs.Shop:AddButton({
@@ -6122,10 +6054,7 @@ Tabs.Shop:AddButton({
 })
 
 
-Tabs.Shop:AddParagraph({
-	Title = "Items",
-	Content = "Misc items"
-})
+local Mastery = Tabs.Shop:AddSection("Misc Items")
 
 Tabs.Shop:AddButton({
 	Title = "Refund Stats",
@@ -6228,11 +6157,8 @@ function Hop()
 	Teleport()
 end      
 
-Tabs.Misc:AddParagraph({
-	Title = "Open Ui",
-	Content = "Open ui player"
+local Mastery = Tabs.Misc:AddSection("Open Ui")
 
-})
 Tabs.Misc:AddButton({
 	Title = "Devil Shop",
 	Description = "",
@@ -6278,10 +6204,7 @@ Tabs.Misc:AddButton({
 
 
 
-Tabs.Misc:AddParagraph({
-	Title = "Troll",
-	Content = "Trolling"
-})
+local Mastery = Tabs.Misc:AddSection("Trolling")
 
 
 
@@ -6312,10 +6235,7 @@ Tabs.Misc:AddButton({
 --Hop
 
 if First_Sea or Second_Sea then
-    Tabs.Hop:AddParagraph({
-        Title = "Third Sea Please !!!",
-        Content = "You are in third sea / sea 3"
-    })
+    local Mastery = Tabs.Hop:AddSection("Thid Sea Please !!!")
 
 end
 
