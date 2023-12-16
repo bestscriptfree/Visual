@@ -3788,7 +3788,7 @@ if Third_Sea then
     end)
 
 
-    local AutoElite = Tabs.Main:AddSection("Eltie Hunter Farm")
+    local AutoElite = Tabs.Main:AddSection("Elite Hunter Farm")
 
     local ToggleElite = Tabs.Main:AddToggle("ToggleElite", {Title = "Auto Elite Hunter", Default = false })
 
@@ -4534,7 +4534,7 @@ end)
 Options.ToggleV:SetValue(true)
 
 
-local ToggleF = Tabs.Setting:AddToggle("ToggleF", {Title = "Skill F", Default = true })
+local ToggleF = Tabs.Setting:AddToggle("ToggleF", {Title = "Skill F", Default = false })
 ToggleF:OnChanged(function(Value)
    SkillF = Value
     end)
@@ -4598,7 +4598,7 @@ local SettingTweenSpeed = Tabs.Setting:AddSection("Setting Tween Speed")
 local SliderTween = Tabs.Setting:AddSlider("SliderTween", {
     Title = "Teleport / Tween",
     Description = "",
-    Default = 250,
+    Default = 300,
     Min = 100,
     Max = 1000,
     Rounding = 1,
@@ -4609,7 +4609,7 @@ local SliderTween = Tabs.Setting:AddSlider("SliderTween", {
 SliderTween:OnChanged(function(Value)
      ChangeSpeed = Value
 end)
-SliderTween:SetValue(250)
+SliderTween:SetValue(300)
 
 --Stats
 local ToggleMelee = Tabs.Stats:AddToggle("ToggleMelee", {Title = "Auto Melee", Default = false })
