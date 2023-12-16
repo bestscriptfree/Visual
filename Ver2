@@ -4,8 +4,9 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 --------------------------------------------------------------------------------------------------------------------------------------------
 local Window = Fluent:CreateWindow({
     --ai skid thì nhớ đổi tên =)
+    --táo hub , aniee hub :>
     Title = "Fai Fao Hub",
-    SubTitle = "made by DauCoGhe and Tiến",
+    SubTitle = "Version 2",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 350),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
@@ -13,16 +14,16 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
 })
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-    Setting = Window:AddTab({ Title = "Setting", Icon = "settings" }),
+    Main = Window:AddTab({ Title = "Main Farm", Icon = "home" }),
+    Setting = Window:AddTab({ Title = "Setting Farming", Icon = "settings" }),
     Stats = Window:AddTab({ Title = "Stats", Icon = "plus-circle" }),
     Player = Window:AddTab({ Title = "Player", Icon = "baby" }),
-    Teleport = Window:AddTab({ Title = "Teleport", Icon = "palmtree" }),
+    Teleport = Window:AddTab({ Title = "Travel", Icon = "palmtree" }),
     Fruit = Window:AddTab({ Title = "Devil Fruit", Icon = "cherry" }),
-    Raid = Window:AddTab({ Title = "Dungeon", Icon = "swords" }),
+    Raid = Window:AddTab({ Title = "Raid", Icon = "swords" }),
     Race = Window:AddTab({ Title = "Race V4", Icon = "chevrons-right" }),
-    Shop = Window:AddTab({ Title = "Shop", Icon = "shopping-cart" }),
-	Misc = Window:AddTab({ Title = "Misc", Icon = "list-plus" }),
+    Shop = Window:AddTab({ Title = "Buy Items", Icon = "shopping-cart" }),
+	Misc = Window:AddTab({ Title = "Miscellaneous", Icon = "list-plus" }),
     Hop = Window:AddTab({ Title = "Hop", Icon = "wifi" }),
 }
 local Options = Fluent.Options
@@ -1114,7 +1115,7 @@ function UpdateIslandESP()
                         name.TextYAlignment = 'Top'
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
-                        name.TextColor3 = Color3.fromRGB(7, 236, 240)
+                        name.TextColor3 = Color3.fromRGB(8, 0, 0)
                     else
                         v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
                     end
@@ -1149,7 +1150,7 @@ for i,v in pairs(game:GetService'Players':GetChildren()) do
                     bill.AlwaysOnTop = true
                     local name = Instance.new('TextLabel',bill)
                     name.Font = Enum.Font.GothamSemibold
-                    name.FontSize = "Size14"
+                    name.FontSize = "Size10"
                     name.TextWrapped = true
                     name.Text = (v.Name ..' \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
                     name.Size = UDim2.new(1,0,1,0)
@@ -1157,7 +1158,7 @@ for i,v in pairs(game:GetService'Players':GetChildren()) do
                     name.BackgroundTransparency = 1
                     name.TextStrokeTransparency = 0.5
                     if v.Team == game.Players.LocalPlayer.Team then
-                        name.TextColor3 = Color3.new(0,255,0)
+                        name.TextColor3 = Color3.new(0,0,254)
                     else
                         name.TextColor3 = Color3.new(255,0,0)
                     end
@@ -2135,17 +2136,6 @@ spawn(function()
     end)
   end)
 
---Get Player Character
-function getRoot(char)
-	local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
-	return rootPart
-end
-
-function r15(plr)
-	if plr.Character:FindFirstChildOfClass('Humanoid').RigType == Enum.HumanoidRigType.R15 then
-		return true
-	end
-end
 
 -- [Body Gyro]
    spawn(function()
@@ -2267,8 +2257,7 @@ function ClickCamera()
             end
         end
     end
-
-
+    
 --Attack Mastery
     function NormalAttack()
         if not _G.NormalAttack then
@@ -2286,20 +2275,8 @@ function ClickCamera()
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
--- [Remove Stun]
-
-if game.Players.LocalPlayer.Character:FindFirstChild("Stun") then
-    game.Players.LocalPlayer.Character.Stun.Changed:connect(function()
-        pcall(function()
-            if game.Players.LocalPlayer.Character:FindFirstChild("Stun") then
-                game.Players.LocalPlayer.Character.Stun.Value = 0
-            end
-        end)
-    end)
-end
 
 -- [Remove Effect]
-
 spawn(function()
     while wait() do
         for i, v in pairs(game:GetService("Workspace")["_WorldOrigin"]:GetChildren()) do
@@ -2331,7 +2308,6 @@ local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 local cooldownfastattack = tick()
 
-
 --Sword Weapon
 function GetWeaponInventory(Weaponname)
 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
@@ -2345,8 +2321,6 @@ end
 end
 return false
 end
-
-
 
 
 ---Method Wait Mob
@@ -2399,7 +2373,7 @@ spawn(function()
         wait(1)
     end
 end)
-
+--auto turn haki
   function AutoHaki()
     if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
@@ -2677,7 +2651,7 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-    local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {Title = "Kill Near", Default = false })
+    local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {Title = "Kill Near / Mob Aura", Default = false })
     ToggleMobAura:OnChanged(function(Value)
         _G.AutoNear = Value
     end)
@@ -2799,7 +2773,6 @@ end)
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Mastery
 local Mastery = Tabs.Main:AddSection("Mastery Farm")
-
     local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
         Title = "Mastery Mode",
         Values = {"Level","Near Mobs",},
