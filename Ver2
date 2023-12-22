@@ -2026,29 +2026,80 @@ end
 
 
 
-        function Tween(P1)
-            local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-            if Distance >= 1 then
-            Speed = ChangeSpeed
-            end
-            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
-              CFrame = P1
-            }):Play()
-            if _G.StopTween then
-            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear), {
-              CFrame = P1
-            }):Cancel()
-            end
-            end
-            function CancelTween(target)
-            if not target then
-            _G.StopTween = true
-            wait()
-            Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-            wait()
-            _G.StopTween = false
-            end
-            end
+        function Tween(...)
+            local RealtargetPos = { ... }
+    local targetPos = RealtargetPos[1]
+    local RealTarget
+    if type(targetPos) == "vector" then
+        RealTarget = CFrame.new(targetPos)
+    elseif type(targetPos) == "userdata" then
+        RealTarget = targetPos
+    elseif type(targetPos) == "number" then
+        RealTarget = CFrame.new(unpack(RealtargetPos))
+    end
+    if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health == 0 then
+        if tween then tween:Cancel() end
+        repeat wait() until game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0; wait(0.2)
+    end
+    local tweenfunc = {}
+    local Distance = (RealTarget.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
+        .Magnitude
+    if Distance < 1000 then
+        Speed = 315
+    elseif Distance >= 1000 then
+        Speed = 300
+    end
+    if BypassTP then
+        if Distance > 3000 and not AutoNextIsland and not (game.Players.LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Character:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice")) and not (Name == "Fishman Commando" or Name == "Fishman Warrior") then
+            pcall(function()
+                tween:Cancel()
+                fkwarp = false
+                if game:GetService("Players")["LocalPlayer"].Data:FindFirstChild("SpawnPoint").Value == tostring(GetIsLand(RealTarget)) then
+                    wait(.1)
+                    Com("F_", "TeleportToSpawn")
+                elseif game:GetService("Players")["LocalPlayer"].Data:FindFirstChild("LastSpawnPoint").Value == tostring(GetIsLand(RealTarget)) then
+                    game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+                    wait(0.1)
+                    repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+                else
+                    if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
+                        if fkwarp == false then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = RealTarget
+                        end
+                        fkwarp = true
+                    end
+                    wait(.08)
+                    game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+                    repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+                    wait(.1)
+                    Com("F_", "SetSpawnPoint")
+                end
+                wait(0.2)
+
+                return
+            end)
+        end
+    end
+
+    local tween_s = game:service "TweenService"
+    local info = TweenInfo.new(
+        (RealTarget.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
+        .Magnitude / Speed, Enum.EasingStyle.Linear)
+    local tweenw, err = pcall(function()
+        tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, { CFrame = RealTarget })
+        tween:Play()
+    end)
+
+    function tweenfunc:Stop()
+        tween:Cancel()
+    end
+
+    function tweenfunc:Wait()
+        tween.Completed:Wait()
+    end
+
+    return tweenfunc
+end
 
     
     --function TP to Boat/Ship
@@ -2381,7 +2432,47 @@ end)
     end
 end
 ---Bypass Teleport
---made Fai Fao Hub
+--made Fai Fao Hub 
+    function GetIsLand(...)
+	local RealtargetPos = {...}
+	local targetPos = RealtargetPos[1]
+	local RealTarget
+	if type(targetPos) == "vector" then
+		RealTarget = targetPos
+	elseif type(targetPos) == "userdata" then
+		RealTarget = targetPos.Position
+	elseif type(targetPos) == "number" then
+		RealTarget = CFrame.new(unpack(RealtargetPos))
+		RealTarget = RealTarget.p
+	end
+
+	local ReturnValue
+	local CheckInOut = math.huge;
+	if game.Players.LocalPlayer.Team then
+		for i,v in pairs(game.Workspace._WorldOrigin.PlayerSpawns:FindFirstChild(tostring(game.Players.LocalPlayer.Team)):GetChildren()) do 
+			local ReMagnitude = (RealTarget - v:GetModelCFrame().p).Magnitude;
+			if ReMagnitude < CheckInOut then
+				CheckInOut = ReMagnitude;
+				ReturnValue = v.Name
+			end
+		end
+		if ReturnValue then
+			return ReturnValue
+		end 
+    end
+end
+
+--BTP
+
+function BTP(Position)
+	game.Players.LocalPlayer.Character.Head:Destroy()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Position
+	wait(1)
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Position
+	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
+end
+
+
 function BTP(P)
 	repeat wait(0.5)
 		game.Players.LocalPlayer.Character.Humanoid:ChangeState(15)
@@ -2430,6 +2521,7 @@ function BTP(p)
 			end
 		end)
 	end
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2601,15 +2693,9 @@ end)
           CheckLevel()
           if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-          if BypassTP then
-          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQ.Position).Magnitude > 2500 then
-          BTP(CFrameQ)
-          elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQ.Position).Magnitude < 2500 then
-          Tween(CFrameQ)
-          end
-         else
+      
             Tween(CFrameQ)
-            end
+      
           if (CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,QuestLv)
           end
@@ -2897,16 +2983,9 @@ local Mastery = Tabs.Main:AddSection("Mastery Farm")
         elseif AutoFarmMasGun and TypeMastery == 'Boss' then
         if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
         CheckBossQuest()
-        if BypassTP then
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQBoss.Position).Magnitude > 2000 then
-        BTP(CFrameQBoss)
-        wait(3)
-        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQBoss.Position).Magnitude < 2000 then
-        Tween(CFrameQBoss)
-        end
-        else
+      
           Tween(CFrameQBoss)
-        end
+       
       
         if (CFrameQBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuestBoss,QuestLvBoss)
@@ -3066,16 +3145,9 @@ spawn(function()
       CheckLevel(SelectMonster)
       if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
       game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-      if BypassTP then
-      if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQ.Position).Magnitude > 2500 then
-      BTP(CFrameQ)
-      wait(0.2)
-      elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQ.Position).Magnitude < 2500 then
-      Tween(CFrameQ)
-      end
-      else
+ 
         Tween(CFrameQ)
-      end
+  
       if (CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
       game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,QuestLv)
       end
@@ -3168,16 +3240,9 @@ spawn(function()
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                    if BypassTP then
-                        wait()
-                       if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneCFrame2.Position).Magnitude > 2500 then
-                       BTP(BoneCFrame2)
-                       elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneCFrame.Position).Magnitude < 2500 then
-                       Tween(BoneCFrame)
-                       end
-                 else
+                
                          Tween(BoneCFrame)
-                         end
+                  
                 if (BoneCFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
                     end
@@ -3232,14 +3297,10 @@ spawn(function()
 			if _G.CakePrince then
                 pcall(function()
                     local CakeCFrame = CFrame.new(-2142.66821,71.2588654,-12327.4619,0.996939838,-4.33107843e-08,0.078172572,4.20252917e-08,1,1.80894251e-08,-0.078172572,-1.47488439e-08, 0.996939838)
-                    if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeCFrame.Position).Magnitude > 2000 then
-                    BTP(CakeCFrame)
-                    wait(3)
-                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeCFrame.Position).Magnitude < 2000 then
+                  
                     Tween(CakeCFrame)
-                    end
-                end
+              
+             
 					if game.ReplicatedStorage:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then   
 						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
@@ -3475,15 +3536,9 @@ local boss = Tabs.Main:AddSection("Boss Farm")
         if _G.AutoMaterial then
         pcall(function()
           MaterialMon(SelectMaterial)
-          if BypassTP then
-          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - MPos.Position).Magnitude > 3500 then
-          BTP(MPos)
-          elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - MPos.Position).Magnitude < 3500 then
-          Tween(MPos)
-          end
-          else
+       
             Tween(MPos)
-          end
+       
           if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
           for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -3801,15 +3856,7 @@ if Third_Sea then
                                        end
                                    end
                                else
-                                   if BypassTP then
-                                   if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") then
-                                       BTP(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                   elseif game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") then
-                                       BTP(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                   elseif game:GetService("ReplicatedStorage"):FindFirstChild("Urban") then
-                                       BTP(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                   end
-                               else
+                                 
                                    if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") then
                                        Tween(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") then
@@ -3819,7 +3866,7 @@ if Third_Sea then
                                    end
    
                                end
-                               end
+                         
                            end
                        else
                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
@@ -4567,23 +4614,6 @@ SliderPosZ:SetValue(0)
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-local SettingTweenSpeed = Tabs.Setting:AddSection("Setting Tween Speed")
-
-local SliderTween = Tabs.Setting:AddSlider("SliderTween", {
-    Title = "Teleport / Tween",
-    Description = "",
-    Default = 300,
-    Min = 100,
-    Max = 1000,
-    Rounding = 1,
-    Callback = function(Value)
-      ChangeSpeed = Value
-    end
-})
-SliderTween:OnChanged(function(Value)
-     ChangeSpeed = Value
-end)
-SliderTween:SetValue(300)
 
 --Stats
 local ToggleMelee = Tabs.Stats:AddToggle("ToggleMelee", {Title = "Auto Melee", Default = false })
@@ -5843,12 +5873,9 @@ spawn(function()
                         end
                     end
                 else
-                    if BypassTP then
-                        BTP(AcientCframe)
-                    else
+               
                         Tween(AcientCframe)
-                    end
-
+          
                     for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
                         if v.Name == "Cocoa Warrior" then
                             Tween(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
