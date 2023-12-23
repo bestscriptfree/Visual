@@ -2693,9 +2693,15 @@ end)
           CheckLevel()
           if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-      
+          if BypassTP then
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQ.Position).Magnitude > 2500 then
+            BTP(CFrameQ)
+            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQ.Position).Magnitude < 2500 then
             Tween(CFrameQ)
-      
+            end
+                else
+              Tween(CFrameQ)
+              end
           if (CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,QuestLv)
           end
@@ -3240,9 +3246,15 @@ spawn(function()
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                
-                         Tween(BoneCFrame)
-                  
+                    if BypassTP then
+                       if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneCFrame2.Position).Magnitude > 2500 then
+                       BTP(BoneCFrame2)
+                       elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BoneCFrame2.Position).Magnitude < 2500 then
+                       Tween(BoneCFrame2)
+                       end
+                             else
+                         Tween(BoneCFrame2)
+                         end
                 if (BoneCFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then    
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest","HauntedQuest2",1)
                     end
@@ -3297,10 +3309,14 @@ spawn(function()
 			if _G.CakePrince then
                 pcall(function()
                     local CakeCFrame = CFrame.new(-2142.66821,71.2588654,-12327.4619,0.996939838,-4.33107843e-08,0.078172572,4.20252917e-08,1,1.80894251e-08,-0.078172572,-1.47488439e-08, 0.996939838)
-                  
-                    Tween(CakeCFrame)
-              
-             
+                    if BypassTP then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeCFrame.Position).Magnitude > 2000 then
+                        BTP(CakeCFrame)
+                        wait(3)
+                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CakeCFrame.Position).Magnitude < 2000 then
+                        Tween(CakeCFrame)
+                        end
+                    end
 					if game.ReplicatedStorage:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then   
 						if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
@@ -3397,11 +3413,11 @@ local boss = Tabs.Main:AddSection("Boss Farm")
 
 
     if First_Sea then
-		tableBoss = {"The Gorilla King","Bobby","Yeti","Mob Leader","Vice Admiral","Warden","Chief Warden","Swan","Magma Admiral","Fishman Lord","Wysper","Thunder God","Cyborg","Saber Expert"}
+		tableBoss = {"DauCoGhe Raid Boss [Lv. 10000]","The Gorilla King","Bobby","Yeti","Mob Leader","Vice Admiral","Warden","Chief Warden","Swan","Magma Admiral","Fishman Lord","Wysper","Thunder God","Cyborg","Saber Expert"}
 	elseif Second_Sea then
-		tableBoss = {"Diamond","Jeremy","Fajita","Don Swan","Smoke Admiral","Cursed Captain","Darkbeard","Order","Awakened Ice Admiral","Tide Keeper"}
+		tableBoss = {"DauCoGhe Raid Boss [Lv. 10000]","Diamond","Jeremy","Fajita","Don Swan","Smoke Admiral","Cursed Captain","Darkbeard","Order","Awakened Ice Admiral","Tide Keeper"}
 	elseif Third_Sea then
-		tableBoss = {"Stone","Island Empress","Kilo Admiral","Captain Elephant","Beautiful Pirate","rip_indra True Form","Longma","Soul Reaper","Cake Queen"}
+		tableBoss = {"DauCoGhe Raid Boss [Lv. 10000]","Stone","Island Empress","Kilo Admiral","Captain Elephant","Beautiful Pirate","rip_indra True Form","Longma","Soul Reaper","Cake Queen"}
 	end
 
 
@@ -3412,7 +3428,7 @@ local boss = Tabs.Main:AddSection("Boss Farm")
         Default = 1,
     })
 
-    DropdownBoss:SetValue("DauCoGhe [Lv. 5000]")
+    DropdownBoss:SetValue("")
     DropdownBoss:OnChanged(function(Value)
 		_G.SelectBoss = Value
     end)
@@ -3427,7 +3443,7 @@ local boss = Tabs.Main:AddSection("Boss Farm")
     Options.ToggleAutoFarmBoss:SetValue(false)
 	spawn(function()
         while wait() do
-            if _G.AutoBoss and BypassTP then
+            if _G.AutoBoss then
                 pcall(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -3441,7 +3457,6 @@ local boss = Tabs.Main:AddSection("Boss Farm")
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                            
                                        --Click
 									   _G.BringMob = false
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
@@ -3453,49 +3468,14 @@ local boss = Tabs.Main:AddSection("Boss Farm")
                     elseif game.ReplicatedStorage:FindFirstChild(_G.SelectBoss) then
 						if ((game.ReplicatedStorage:FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1500 then
 							Tween(game.ReplicatedStorage:FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame)
-						else
-							BTP(game.ReplicatedStorage:FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame)
 					    end
-						_G.BringMob = true
-            
                     end
                 end)
             end
         end
     end)
     
-    spawn(function()
-        while wait() do
-            if _G.AutoBoss and not BypassTP then
-                pcall(function()
-                    if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v.Name == _G.SelectBoss then
-                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat wait(_G.Fast_Delay)
-                                        AttackNoCD()
-                                        AutoHaki()
-                                        EquipTool(SelectWeapon)
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.Humanoid.WalkSpeed = 0
-                                        v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
-                                        Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                        --Click
-										_G.BringMob = false
-                                    until not _G.AutoBoss or not v.Parent or v.Humanoid.Health <= 0
-                                end
-                            end
-                        end
-                    else
-                        if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss) then
-                            Tween(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame * CFrame.new(5,10,7))
-                        end
-                    end
-                end)
-				_G.BringMob = true
-            end
-        end
-    end)
+
 
     local Material = Tabs.Main:AddSection("Material Farm")
 
@@ -3537,8 +3517,15 @@ local boss = Tabs.Main:AddSection("Boss Farm")
         pcall(function()
           MaterialMon(SelectMaterial)
        
+          if BypassTP then
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - MPos.Position).Magnitude > 3500 then
+            BTP(MPos)
+            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - MPos.Position).Magnitude < 3500 then
             Tween(MPos)
-       
+            end
+            else
+              Tween(MPos)
+            end
           if game:GetService("Workspace").Enemies:FindFirstChild(MMon) then
           for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
           if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
