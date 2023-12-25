@@ -2759,7 +2759,7 @@ end)
 
 
 
-        local ToggleCandy = Tabs.Main:AddToggle("ToggleCandy", {Title = "Auto Candy Event Newwwwwww 😍", Default = false })
+        local ToggleCandy = Tabs.Main:AddToggle("ToggleCandy", {Title = "Auto Candy Event New 😂😍", Default = false })
         ToggleCandy:OnChanged(function(Value)
            _G.AutoCandy = Value
         end)
