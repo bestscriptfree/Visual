@@ -6078,7 +6078,8 @@ spawn(function()
                                     v.Humanoid.WalkSpeed = 0
                                     v.Head.CanCollide = false 
                                     FarmPos = v.HumanoidRootPart.CFrame
-                                     toTarget(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
+                                    MonFarm = v.Name
+                                    toTarget(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                     --Click
                                 until not AutoFarmAcient or not v.Parent or v.Humanoid.Health <= 0
                                 BringAcient = false
