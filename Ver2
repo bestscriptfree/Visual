@@ -2225,7 +2225,7 @@ function EquipTool(ToolSe)
 	end
     
     --aimbot mastery
-    --[[
+
 	spawn(function()
 		local gg = getrawmetatable(game)
 		local old = gg.__namecall
@@ -2251,8 +2251,7 @@ function EquipTool(ToolSe)
 		  end
 		  return old(...)
 		  end)
-		end)
-	  ]]
+        end)
 --Equip Gun
 spawn(function()
   pcall(function()
