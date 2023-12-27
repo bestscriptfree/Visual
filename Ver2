@@ -1998,14 +1998,6 @@ for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
 end
 end
 --------------------------------------------------------------------------------------------------------------------------------------------
-if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
-    game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
-end
-
-if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
-game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
-end
-
 ---------Tween
 
   function Tween2(P1)
@@ -2164,7 +2156,7 @@ function Tween(Pos)
     end
 end
 
---------
+---------
 
 function toTargetP(CFgo)
 	if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health <= 0 or not game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") then tween:Cancel() repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") and game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 wait(7) return end
@@ -2191,7 +2183,6 @@ function toTargetP(CFgo)
 	return tweenfunc
 end
 
-    
     --function TP to Boat/Ship
     function TweenShip(CFgo)
         local tween_s = game:service"TweenService"
@@ -2224,7 +2215,6 @@ end
         return tweenfunc
     end
 
- 
 --select weapon
 function EquipTool(ToolSe)
 		if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
@@ -2233,8 +2223,6 @@ function EquipTool(ToolSe)
 			game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
 		end
 	end
-
-
     --aimbot mastery
 	spawn(function()
 		local gg = getrawmetatable(game)
@@ -2277,7 +2265,6 @@ spawn(function()
     end
     end)
   end)
-
 
 -- [Body Gyro]
    spawn(function()
@@ -2330,11 +2317,6 @@ return 0
 end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
---Click Camera
-function ClickCamera()
-    game:GetService("VirtualUser"):CaptureController()
-    game:GetService("VirtualUser"):ClickButton1(Vector2.new(851,158),game:GetService("Workspace").Camera.CFrame)
-    end
 ------AttackNoCD
 
     local plr = game.Players.LocalPlayer
@@ -2416,39 +2398,6 @@ function ClickCamera()
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-
--- [Remove Effect]
-spawn(function()
-    while wait() do
-        for i, v in pairs(game:GetService("Workspace")["_WorldOrigin"]:GetChildren()) do
-            pcall(function()
-                if v.Name == ("CurvedRing") or v.Name == ("SlashHit") or v.Name == ("SwordSlash") or v.Name == ("SlashTail") then --or v.Name == ("Sounds")
-                    v:Destroy()
-                end
-            end)
-        end
-    end
-end)
-
-getgenv().NoDieEffect = true
-if getgenv().NoDieEffect then
-    if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
-        game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
-    end
-    if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Respawn") then
-        game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
-    end
-end
-
-
--- [remove effect Combat]
-local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local CombatFrameworkR = getupvalues(CombatFramework)[2]
-local RigController = require(game:GetService("Players")["LocalPlayer"].PlayerScripts.CombatFramework.RigController)
-local RigControllerR = getupvalues(RigController)[2]
-local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
-local cooldownfastattack = tick()
-
 --Sword Weapon
 function GetWeaponInventory(Weaponname)
 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
@@ -2462,29 +2411,6 @@ end
 end
 return false
 end
-
-
----Method Wait Mob
-Type11 = 1
-spawn(function()
-    while wait(.1) do
-        if Type1 == 1 then
-            Pos2 = CFrame.new(120,60,0)
-        elseif Type1 == 2 then
-            Pos2 = CFrame.new(-120,60,0)
-        end
-        end
-    end)
-
-spawn(function()
-    while wait(.1) do
-        Type1 = 1
-        wait(2)
-        Type1 = 2
-        wait(2)
-    end
-end)
-
 
 ---Method Farm
 Type1 = 1
@@ -2521,8 +2447,6 @@ end)
     end
 end
 ---Bypass Teleport
---made Fai Fao Hub 
-
 function BTP(P)
 	repeat wait(0.5)
 		game.Players.LocalPlayer.Character.Humanoid:ChangeState(15)
@@ -2571,7 +2495,6 @@ function BTP(p)
 			end
 		end)
 	end
-
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2972,13 +2895,7 @@ local Mastery = Tabs.Main:AddSection("Mastery Farm")
     end)
     Options.ToggleMasteryFruit:SetValue(false)
 
-    local ToggleMasteryGun = Tabs.Main:AddToggle("ToggleMasteryGun", {Title = "Auto Gun Mastery", Default = false })
-    ToggleMasteryGun:OnChanged(function(Value)
-        AutoFarmMasGun = Value
-    end)
-    Options.ToggleMasteryGun:SetValue(false)
-
-
+ 
 
     local SliderHealt = Tabs.Main:AddSlider("SliderHealt", {
         Title = "Health (%) Mob",
@@ -2998,190 +2915,7 @@ local Mastery = Tabs.Main:AddSection("Mastery Farm")
 
     SliderHealt:SetValue(25)
     
-	spawn(function()
-        while task.wait(.1) do
-        if AutoFarmMasGun and TypeMastery == 'Level' then
-        pcall(function()
-          CheckLevel(SelectMonster)
-          if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-            Tween(CFrameQ)
-          if (CFrameQ.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
-          game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,QuestLv)
-          end
-          elseif string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-          for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-          if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-          if v.Name == Ms then
-          repeat game:GetService("RunService").Heartbeat:wait()
-          if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
-          EquipTool(CurrentEquipGun)
-          game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * Pos
-          game:GetService("Players").LocalPlayer.Character[CurrentEquipGun].Cooldown.Value = 0
-          UseSkillGun = true
-          else
-        UseSkillGun = false
-         AutoHaki()
-          EquipTool(SelectWeapon)
-         NormalAttack()
-          Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-          v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-          v.HumanoidRootPart.Transparency = 1
-          v.Humanoid.JumpPower = 0
-          v.Humanoid.WalkSpeed = 0
-          v.HumanoidRootPart.CanCollide = false
-          _G.FastAttackFaiFao = false
-          FarmPos = v.HumanoidRootPart.CFrame
-          MonFarm = v.Name
-          end
-          until not AutoFarmMasGun or not v.Parent or v.Humanoid.Health <= 0 or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or not TypeMastery == 'Queat'
-          UseSkillGun = false
-          end
-          _G.FastAttackFaiFao = true
-          end
-          end
-          end
-          end)
-        elseif AutoFarmMasGun and TypeMastery == 'Near Mobs' then
-        pcall(function()
-          for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
-          if v.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v:FindFirstChild("HumanoidRootPart").Position).Magnitude <= 2000 then
-          repeat game:GetService("RunService").Heartbeat:wait()
-          if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
-          EquipTool(CurrentEquipGun)
-          game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * Pos
-          game:GetService("Players").LocalPlayer.Character[CurrentEquipGun].Cooldown.Value = 0
-          UseSkillGun = true
-          else
-            UseSkillGun = false
-            AutoHaki()
-          EquipTool(SelectWeapon)
-          Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-          v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-          v.HumanoidRootPart.Transparency = 1
-          v.Humanoid.JumpPower = 0
-          v.Humanoid.WalkSpeed = 0
-          v.HumanoidRootPart.CanCollide = false
-          _G.FastAttackFaiFao = false
-          NormalAttack()
-          FarmPos = v.HumanoidRootPart.CFrame
-          MonFarm = v.Name
-          end
-          until not AutoFarmMasGun or not MasteryType == 'Near Mobs' or not v.Parent or v.Humanoid.Health <= 0 or not TypeMastery == 'Near Mobs'
-          UseSkillGun = false
-          _G.FastAttackFaiFao = true
-          end
-          end
-          end
-          end)
-        elseif AutoFarmMasGun and TypeMastery == 'Boss' then
-        if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-        CheckBossQuest()
-          Tween(CFrameQBoss)
-        if (CFrameQBoss.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuestBoss,QuestLvBoss)
-        end
-        elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-        pcall(function()
-          CheckBossQuest()
-          if game:GetService("Workspace").Enemies:FindFirstChild(SelectBoss) then
-          for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-          if v.Name == selectBoss and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-          repeat game:GetService("RunService").Heartbeat:wait()
-          if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
-          EquipTool(CurrentEquipGun)
-          Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-          game:GetService("Players").LocalPlayer.Character[CurrentEquipGun].Cooldown.Value = 0
-          UseSkillGun = true
-          else
-            UseSkillGun = false
-            AutoHaki()
-          EquipTool(SelectWeapon)
-          Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-          v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-          v.HumanoidRootPart.Transparency = 1
-          v.Humanoid.JumpPower = 0
-          v.Humanoid.WalkSpeed = 0
-          v.HumanoidRootPart.CanCollide = false
-          FarmPos = v.HumanoidRootPart.CFrame
-          MonFarm = v.Name
-          end
-          until not AutoFarmMasGun or not TypeMastery == 'Boss' or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name)
-          end
-          end
-          else
-            UseSkillGun = false
-          Tween(game:GetService("ReplicatedStorage"):FindFirstChild(SelectBoss).HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-          end
-          end)
-        end
-        end
-        end
-        end)
-      
-      spawn(function()
-        game:GetService("RunService").RenderStepped:Connect(function()
-          if UseSkillGun then
-          pcall(function()
-            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            if v.Name == MonFarm then
-            game:GetService("Players").LocalPlayer.Character[CurrentEquipGun].RemoteFunctionShoot:InvokeServer(v.HumanoidRootPart.Position,v.HumanoidRootPart)
-            ClickCamera()
-            end
-            end
-            end)
-          end
-          end)
-        end)
-
-
-
-        spawn(function()
-            while wait(1) do
-                if UseSkillGun then
-                    pcall(function()
-                        CheckLevel()
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do                                                 
-                                if SkillZ then
-                                    local args = {
-                                        [1] = FarmPosMasteryGun.Position
-                                    }
-                                    game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))                        
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"Z",false,game)
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"Z",false,game)
-                                end
-                                if SkillX then          
-                                    local args = {
-                                        [1] = FarmPosMasteryGun.Position
-                                    }
-                                    game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))               
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"X",false,game)
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"X",false,game)
-                            end
-                        end
-                    end)
-                end
-            end
-        end)
     
-        
-        
-        spawn(function()
-            pcall(function()
-                game:GetService("RunService").RenderStepped:Connect(function()
-                    if UseSkillGun then
-                        local args = {
-                            [1] = FarmPosMasteryGun.Position
-                        }
-                        game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Data.Gun.Value].RemoteEvent:FireServer(unpack(args))
-                    end
-                end)
-            end)
-        end)
-
-
-
 spawn(function()
 while task.wait(1) do
 if _G.UseSkill then
@@ -3198,27 +2932,27 @@ pcall(function()
   local DevilFruitMastery = game:GetService("Players").LocalPlayer.Character:FindFirstChild(game.Players.LocalPlayer.Data.DevilFruit.Value).Level.Value
   if SkillZ and DevilFruitMastery >= 1 then
   game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-  wait(.1)
+  wait(0.1)
   game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
   end
   if SkillX and DevilFruitMastery >= 2 then
   game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-  wait(.2)
+  wait(0.2)
   game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
   end
   if SkillC and DevilFruitMastery >= 3 then
   game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
-  wait(.3)
+  wait(0.3)
   game:service('VirtualInputManager'):SendKeyEvent(false, "C", false, game)
   end
   if SkillV and DevilFruitMastery >= 4 then
   game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
-  wait(.4)
+  wait(0.4)
   game:service('VirtualInputManager'):SendKeyEvent(false, "V", false, game)
   end
   if SkillF and DevilFruitMastery >= 5 then
   game:GetService("VirtualInputManager"):SendKeyEvent(true, "F", false, game)
-  wait(.5)
+  wait(0.5)
   game:GetService("VirtualInputManager"):SendKeyEvent(false, "F", false, game)
   end
   end
@@ -3269,12 +3003,12 @@ spawn(function()
       v.HumanoidRootPart.CanCollide = false
       FarmPos = v.HumanoidRootPart.CFrame
       MonFarm = v.Name
-      _G.FastAttackFaiFao = false
+      
       NormalAttack()
       end
       until not AutoFarmMasDevilFruit or not v.Parent or v.Humanoid.Health == 0 or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or not TypeMastery == 'Level'
       _G.UseSkill = false
-      _G.FastAttackFaiFao = true
+      
       end
       end
       end
@@ -3285,7 +3019,7 @@ spawn(function()
     pcall(function()
       for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
       if v.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-      if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v:FindFirstChild("HumanoidRootPart").Position).Magnitude <= 2000 then
+      if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v:FindFirstChild("HumanoidRootPart").Position).Magnitude <= 5000 then
       repeat game:GetService("RunService").Heartbeat:wait()
       if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
       _G.UseSkill = true
@@ -3303,12 +3037,12 @@ spawn(function()
   --v.Humanoid:ChangeState(14)
       FarmPos = v.HumanoidRootPart.CFrame
       MonFarm = v.Name
-      _G.FastAttackFaiFao = false
+      
        NormalAttack()
       end
       until not AutoFarmMasDevilFruit or not MasteryType == 'Near Mobs' or not v.Parent or v.Humanoid.Health == 0 or not TypeMastery == 'Near Mobs'
       _G.UseSkill = false
-      _G.FastAttackFaiFao = true
+      
     end
 end
 end
@@ -3316,7 +3050,6 @@ end)
 end
 end
 end)
-	
 
 local MiscFarm = Tabs.Main:AddSection("Misc Farm")
 
@@ -3375,14 +3108,9 @@ spawn(function()
                             end
                         end
                     else
-                        if game:GetService("ReplicatedStorage"):FindFirstChild("Demonic Soul") then
-                        Tween(v.HumanoidRootPart.CFrame * Pos2)
-                        end
                     end
-                    
                 end
             end)
-
         end
     end
 end)
@@ -3438,17 +3166,16 @@ spawn(function()
 									until _G.CakePrince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
 								end
 							end
-                        
 						else
 							Tween(CakeCFrame)
 						end
 					end
-            
 				end)
 			end
 		end
     end)
     end
+
     if Second_Sea then
     local ToggleVatChatKiDi = Tabs.Main:AddToggle("ToggleVatChatKiDi", {Title = "Auto Ectoplasm", Default = false })
     ToggleVatChatKiDi:OnChanged(function(Value)
@@ -3491,11 +3218,8 @@ spawn(function()
                 end
             end)
         end
-
     end)
 end
-
-
 
 local boss = Tabs.Main:AddSection("Boss Farm")
 
@@ -3619,7 +3343,6 @@ local boss = Tabs.Main:AddSection("Boss Farm")
         SelectMaterial = Value
     end)
 
-
     local ToggleMaterial = Tabs.Main:AddToggle("ToggleMaterial", {Title = "Auto Material", Default = false })
 
     ToggleMaterial:OnChanged(function(Value)
@@ -3657,7 +3380,6 @@ local boss = Tabs.Main:AddSection("Boss Farm")
           v.HumanoidRootPart.CanCollide = false
           FarmPos = v.HumanoidRootPart.CFrame
           MonFarm = v.Name
-  
           --Click
           until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
           end
@@ -3772,12 +3494,9 @@ end)
 end
 
 if Third_Sea then
-
     local RoughSea = Tabs.Main:AddSection("Rough Sea")
 
-
     local ToggleSailBoat = Tabs.Main:AddToggle("ToggleSailBoat", {Title = "Auto Buy Ship", Default = false })
-
     ToggleSailBoat:OnChanged(function(Value)
         _G.SailBoat = Value
     end)
@@ -3837,12 +3556,6 @@ if Third_Sea then
 		end)
 	end)
 	
-
-
-
-
-
-
 
     local ToggleTerrorshark = Tabs.Main:AddToggle("ToggleTerrorshark", {Title = " Kill Terrorshark", Default = false })
 
@@ -4207,10 +3920,7 @@ spawn(function()
                                                    v.Humanoid.JumpPower = 0
                                                    v.Humanoid.WalkSpeed = 0
                                                    v.HumanoidRootPart.CanCollide = false
-                                                   FarmPos = v.HumanoidRootPart.CFrame
-                                                   MonFarm = v.Name
                                                    v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-                                                   _G.BringMob = false
                                                until _G.AutoElite == false or v.Humanoid.Health <= 0 or not v.Parent
                                            end
                                        end
@@ -4233,7 +3943,6 @@ spawn(function()
                        end
                    end)
                end
-			   _G.BringMob = true
            end
        end)
     end
@@ -4504,7 +4213,6 @@ if Third_Sea then
                                     Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                     v.HumanoidRootPart.Transparency = 1
                                     sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
-                        
 									--Click
                                 until v.Humanoid.Health <= 0 or AutoHallowSycthe == false
                             end
