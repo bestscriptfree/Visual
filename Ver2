@@ -2965,7 +2965,7 @@ local Mastery = Tabs.Main:AddSection("Mastery Farm")
         Max = 100,
         Rounding = 1,
         Callback = function(Value)
-            KillPercent = ValueNQuest
+            KillPercent = Value
         end
     })
 
