@@ -2421,13 +2421,13 @@ Type1 = 1
 spawn(function()
     while wait(.1) do
         if Type == 1 then
-            Pos = CFrame.new(0,60,0)
+            Pos = CFrame.new(10,40,10)
         elseif Type == 2 then
-            Pos = CFrame.new(-30,0,-30)
+            Pos = CFrame.new(-30,10,-30)
         elseif Type == 3 then
-            Pos = CFrame.new(0,0,-60)
+            Pos = CFrame.new(10,10,-40)
         elseif Type == 4 then
-            Pos = CFrame.new(-60,0,0)	
+            Pos = CFrame.new(-40,10,10)	
         end
         end
     end)
@@ -2482,7 +2482,6 @@ end
 end
 
 --BTP
-
 function BTP(Position)
 	game.Players.LocalPlayer.Character.Head:Destroy()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Position
@@ -2490,7 +2489,6 @@ function BTP(Position)
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Position
 	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
 end
-
 
 function BTP(P)
 	repeat wait(0.5)
@@ -2759,54 +2757,64 @@ end)
 
 
 
-        local ToggleCandy = Tabs.Main:AddToggle("ToggleCandy", {Title = "Auto Candy Event New 😂😍", Default = false })
+        local ToggleCandy = Tabs.Main:AddToggle("ToggleCandy", {Title = "Auto Farm Candy 😍😂😍😂😂😍😂😎😎", Default = false })
         ToggleCandy:OnChanged(function(Value)
            _G.AutoCandy = Value
         end)
         Options.ToggleCandy:SetValue(false)
 
-        spawn(function()
-            while wait() do 
-                if _G.AutoCandy then
-                    pcall(function()
-                        toTarget(CFrame.new(-16603.197265625, 130.3873748779297, 1087.16455078125))
-                        if game:GetService("Workspace").Enemies:FindFirstChild("Isle Outlaw") or game:GetService("Workspace").Enemies:FindFirstChild("Island Boy") or game:GetService("Workspace").Enemies:FindFirstChild("Sun-kissed Warrior") or game:GetService("Workspace").Enemies:FindFirstChild("Isle Champion") then
-                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                if v.Name == "Isle Outlaw" or v.Name == "Island Boy" or v.Name == "Sun-kissed Warrior" or v.Name == "Isle Champion" then
-                                   if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                            repeat wait(_G.Fast_Delay)
-                                            AttackNoCD()
-                                            AutoHaki()
-                                            EquipTool(SelectWeapon)
-                                            BringAcient = true
-                                            v.HumanoidRootPart.CanCollide = false
-                                            v.Humanoid.WalkSpeed = 0
-                                            v.Head.CanCollide = false 
-                                            FarmPos = v.HumanoidRootPart.CFrame
-                                            MonFarm = v.Name
-                                            toTarget(v.HumanoidRootPart.CFrame * Pos)
-                                        until not _G.AutoCandy or not v.Parent or v.Humanoid.Health <= 0
-                                    end
-                                end
+       
+   local CandyPos = CFrame.new(-16603.197265625, 130.3873748779297, 1087.16455078125)
+   spawn(function()
+             while wait() do 
+                 if _G.AutoCandy then
+                     pcall(function()
+                         if BypassTP then
+                             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CandyPos.Position).Magnitude > 2500 then
+                             BTP(CandyPos)
+                             elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CandyPos.Position).Magnitude < 2500 then
+                            Tween(CFrame.new(-16599.1484375, 154.2681121826172, -166.32186889648438))
+                             end
+                             else
+                            Tween(CFrame.new(-16599.1484375, 154.2681121826172, -166.32186889648438))
                             end
-                        else
-                            for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
-                                if v.Name == "Isle Outlaw" then
-                                    toTarget(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                                elseif v.Name == "Island Boy" then
-                                    toTarget(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                                elseif v.Name == "Sun-kissed Warrior" then
-                                    toTarget(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                                elseif v.Name == "Isle Champion" then
-                                    toTarget(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                                end
-                            end
-                            toTarget(CFrame.new(-16599.1484375, 154.2681121826172, -166.32186889648438))
-                        end
-                    end)
-                end
-            end
-        end)
+                         if game:GetService("Workspace").Enemies:FindFirstChild("Isle Outlaw") or game:GetService("Workspace").Enemies:FindFirstChild("Island Boy") or game:GetService("Workspace").Enemies:FindFirstChild("Sun-kissed Warrior") or game:GetService("Workspace").Enemies:FindFirstChild("Isle Champion") then
+                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                 if v.Name == "Isle Outlaw" or v.Name == "Island Boy" or v.Name == "Sun-kissed Warrior" or v.Name == "Isle Champion" then
+                                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                             repeat wait(_G.Fast_Delay)
+                                             AttackNoCD()
+                                             AutoHaki()
+                                             EquipTool(SelectWeapon)
+                                             BringAcient = true
+                                             v.HumanoidRootPart.CanCollide = false
+                                             v.Humanoid.WalkSpeed = 0
+                                             v.Head.CanCollide = false 
+                                             FarmPos = v.HumanoidRootPart.CFrame
+                                             MonFarm = v.Name
+                                             Tween(v.HumanoidRootPart.CFrame * Pos)
+                                         until not _G.AutoCandy or not v.Parent or v.Humanoid.Health <= 0
+                                     end
+                                 end
+                             end
+                         else
+                             for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
+                                 if v.Name == "Isle Outlaw" then
+                                     Tween(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                 elseif v.Name == "Island Boy" then
+                                     Tween(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                 elseif v.Name == "Sun-kissed Warrior" then
+                                     Tween(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                 elseif v.Name == "Isle Champion" then
+                                     Tween(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                                 end
+                             end
+                           
+                         end
+                     end)
+                 end
+             end
+         end)
 
 
 
