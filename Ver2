@@ -28,6 +28,38 @@ local Tabs = {
 local Options = Fluent.Options
 do
 --------------------------------------------------------------------------------------------------------------------------------------------
+--Choose Team
+repeat wait()
+	if game.Players.LocalPlayer.Team == nil and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Visible == true then
+		if _G.Settings.Configs["Select Team"] == "Pirate" then
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Size = UDim2.new(0, 10000, 0, 10000)
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4, 0, -5, 0)
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.BackgroundTransparency = 1
+			wait(.5)
+			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, true, game, 1)
+			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, false, game, 1)
+		elseif _G.Settings.Configs["Select Team"] == "Marine" then
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Size = UDim2.new(0, 10000, 0, 10000)
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4, 0, -5, 0)
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.BackgroundTransparency = 1
+			wait(.5)
+			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, true, game, 1)
+			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, false, game, 1)
+		else
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Size = UDim2.new(0, 10000, 0, 10000)
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4, 0, -5, 0)
+			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.BackgroundTransparency = 1
+			wait(.5)
+			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, true, game, 1)
+			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, false, game, 1)
+		end
+	end
+until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
+--------------------------------------------------------------------------------------------------------------------------------------------
+--Place Id Check
+local id = game.PlaceId
+if id == 2753915549 then World1 = true; elseif id == 4442272183 then World2 = true; elseif id == 7449423635 then World3 = true; else game:Shutdown() end;
+--------------------------------------------------------------------------------------------------------------------------------------------
 --Flag Player
 function AntiBan()
     for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
@@ -46,6 +78,13 @@ function AntiBan()
      end
     end
     AntiBan()
+--------------------------------------------------------------------------------------------------------------------------------------------
+--Anti AFK
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+	game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	wait(1)
+	game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
 ------// BLOX FRUIT
 --// Sea world
 First_Sea = false
@@ -6452,7 +6491,7 @@ end
 local Mastery = Tabs.Misc:AddSection("Open Ui")
 
 Tabs.Misc:AddButton({
-	Title = "Devil Shop",
+	Title = "Devil Shop Menu",
 	Description = "",
 	Callback = function()
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
@@ -6463,7 +6502,7 @@ Tabs.Misc:AddButton({
 
 
 Tabs.Misc:AddButton({
-	Title = "Color Haki",
+	Title = "Color Haki Menu",
 	Description = "",
 	Callback = function()
 		game.Players.localPlayer.PlayerGui.Main.Colors.Visible = true
@@ -6473,7 +6512,7 @@ Tabs.Misc:AddButton({
 
 
 Tabs.Misc:AddButton({
-	Title = "Title Name",
+	Title = "Title Name Menu",
 	Description = "",
 	Callback = function()
 		local args = {
@@ -6487,7 +6526,7 @@ Tabs.Misc:AddButton({
 
 
 Tabs.Misc:AddButton({
-	Title = "Open Awakening",
+	Title = "Awakening Menu",
 	Description = "",
 	Callback = function()
         game:GetService("Players").LocalPlayer.PlayerGui.Main.AwakeningToggler.Visible = true
@@ -6495,9 +6534,7 @@ Tabs.Misc:AddButton({
 })
 
 
-
-local Mastery = Tabs.Misc:AddSection("Trolling")
-
+local Mastery = Tabs.Misc:AddSection("Troll")
 
 
 Tabs.Misc:AddButton({
@@ -6522,13 +6559,45 @@ Tabs.Misc:AddButton({
 
 
 
+local Mastery = Tabs.Misc:AddSection("Misc")
+
+local ToggleAutoRejoin = Tabs.Hop:AddToggle("ToggleAutoRejoin", {Title = "Auto Rejoin", Default = true })
+ToggleAutoRejoin:OnChanged(function(Value)
+	_G.Settings.Misc['Auto Rejoin'] = Value
+end)
+Options.ToggleAutoRejoin:SetValue(true)
+spawn(function()
+	while wait() do
+		if _G.Settings.Misc['Auto Rejoin'] then
+			_G.Settings.Misc['Auto Rejoin'] = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+				if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+					print("Unique | Rejoin!")
+					game:GetService("TeleportService"):Teleport(game.PlaceId)
+				end
+			end)
+		end
+	end
+end)
+
+
+local ToggleAntiAFK = Tabs.Hop:AddToggle("ToggleAntiAFK", {Title = "Anti AFK", Default = true })
+ToggleAntiAFK:OnChanged(function(vu)
+	local vu = game:GetService("VirtualUser")
+	repeat wait() until game:IsLoaded() 
+		game:GetService("Players").LocalPlayer.Idled:connect(function()
+		game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+			vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+			wait(1)
+			vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	   end)
+	end)
+Options.ToggleAntiAFK:SetValue(true)
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Hop
 
 if First_Sea or Second_Sea then
     local Mastery = Tabs.Hop:AddSection("Thid Sea Please !!!")
-
 end
 
 if Third_Sea then
@@ -6596,4 +6665,4 @@ spawn(function()
     end
 end)
 end
------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------
