@@ -1988,17 +1988,22 @@ end
     end
    
 
---BTPZ
-
-function BTPZ(Position)
+--BTP
+function BTP(Position)
 	game.Players.LocalPlayer.Character.Head:Destroy()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Position
 	wait(0.5)
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Position
 	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
 end
+--BTPZ
+function BTPZ(Point)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Point
+    task.wait()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Point
+        end
 ------Bypass TP 2
-local function GetIsLand(...)
+ function GetIsLand(...)
 	local RealtargetPos = {...}
 	local targetPos = RealtargetPos[1]
 	local RealTarget
@@ -2028,7 +2033,7 @@ local function GetIsLand(...)
 end
 
 
-        local function toTarget(...)
+     function toTarget(...)
     local RealtargetPos = { ... }
     local targetPos = RealtargetPos[1]
     local RealTarget
@@ -2758,7 +2763,7 @@ end)
              while wait() do 
                  if _G.AutoCandy then
                      pcall(function()
-                        toTarget(CandyPos)
+                        Tween(CandyPos)
                          if game:GetService("Workspace").Enemies:FindFirstChild("Isle Outlaw") or game:GetService("Workspace").Enemies:FindFirstChild("Island Boy") or game:GetService("Workspace").Enemies:FindFirstChild("Sun-kissed Warrior") or game:GetService("Workspace").Enemies:FindFirstChild("Isle Champion") then
                              for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                  if v.Name == "Isle Outlaw" or v.Name == "Island Boy" or v.Name == "Sun-kissed Warrior" or v.Name == "Isle Champion" then
@@ -5069,6 +5074,7 @@ SelectedPly:SetValue("nil")
 SelectedPly:OnChanged(function(Value)
     _G.SelectPly = Value
 end)
+
 
 
 local ToggleTeleport = Tabs.Player:AddToggle("ToggleTeleport", {Title = "Teleport To Player", Default = false })
