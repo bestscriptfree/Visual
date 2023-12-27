@@ -2223,7 +2223,9 @@ function EquipTool(ToolSe)
 			game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
 		end
 	end
+    
     --aimbot mastery
+    --[[
 	spawn(function()
 		local gg = getrawmetatable(game)
 		local old = gg.__namecall
@@ -2250,7 +2252,7 @@ function EquipTool(ToolSe)
 		  return old(...)
 		  end)
 		end)
-	  
+	  ]]
 --Equip Gun
 spawn(function()
   pcall(function()
@@ -4834,6 +4836,90 @@ ToggleQuanSat:OnChanged(function(Value)
 end)
 Options.ToggleQuanSat:SetValue(false)
 
+
+local Teleport = Tabs.Player:AddSection("Combat")
+
+local ToggleAimBotSkill = Tabs.Player:AddToggle("ToggleAimBotSkill", {Title = "Aimbot Skill", Default = false })
+ToggleAimBotSkill:OnChanged(function(Value)
+    Skillaimbot = Value
+end)
+Options.ToggleAimBotSkill:SetValue(false)
+
+local ToggleAimbotGun = Tabs.Player:AddToggle("ToggleAimbotGun", {Title = "Aimbot Gun", Default = false })
+ToggleAimbotGun:OnChanged(function(Value)
+    Aimbot = Value
+end)
+Options.ToggleAimbotGun:SetValue(false)
+
+
+
+local gg = getrawmetatable(game)
+local old = gg.__namecall
+setreadonly(gg, false)
+gg.__namecall = newcclosure(function(...)
+    local method = getnamecallmethod()
+    local args = { ... }
+    if tostring(method) == "FireServer" then
+        if tostring(args[1]) == "RemoteEvent" then
+            if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+                if Skillaimbot then
+                    args[2] = AimBotSkillPosition
+                    return old(unpack(args))
+                end
+            end
+        end
+    end
+    return old(...)
+end)
+
+spawn(function()
+    while wait() do
+        for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if v:IsA("Tool") then
+                if v:FindFirstChild("RemoteFunctionShoot") then
+                    SelectToolWeaponGun = v.Name
+                end
+            end
+        end
+        for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if v:IsA("Tool") then
+                if v:FindFirstChild("RemoteFunctionShoot") then
+                    SelectToolWeaponGun = v.Name
+                end
+            end
+        end
+    end
+end)
+
+--aimbot skill
+
+task.spawn(function()
+    while wait() do
+        if Skillaimbot then
+            if game.Players:FindFirstChild(SelectPlayer) and game.Players:FindFirstChild(SelectPlayer).Character:FindFirstChild("HumanoidRootPart") and game.Players:FindFirstChild(SelectPlayer).Character:FindFirstChild("Humanoid") and game.Players:FindFirstChild(SelectPlayer).Character.Humanoid.Health > 0 then
+                AimBotSkillPosition = game.Players:FindFirstChild(SelectPlayer).Character:FindFirstChild(
+                    "HumanoidRootPart").Position
+            end
+        end
+    end
+end)
+-----------
+--aimbot gun
+
+local lp = game:GetService('Players').LocalPlayer
+local mouse = lp:GetMouse()
+mouse.Button1Down:Connect(function()
+    if Aimbot and game.Players.LocalPlayer.Character:FindFirstChild(SelectToolWeaponGun) and game:GetService("Players"):FindFirstChild(SelectPlayer) then
+        tool = game:GetService("Players").LocalPlayer.Character[SelectToolWeaponGun]
+        v17 = workspace:FindPartOnRayWithIgnoreList(
+            Ray.new(tool.Handle.CFrame.p,
+                (game:GetService("Players"):FindFirstChild(SelectPlayer).Character.HumanoidRootPart.Position - tool.Handle.CFrame.p)
+                .unit * 100), { game.Players.LocalPlayer.Character, workspace._WorldOrigin });
+        game:GetService("Players").LocalPlayer.Character[SelectToolWeaponGun].RemoteFunctionShoot:InvokeServer(
+            game:GetService("Players"):FindFirstChild(SelectPlayer).Character.HumanoidRootPart.Position,
+            (require(game.ReplicatedStorage.Util).Other.hrpFromPart(v17)));
+    end
+end)
 -----------------------------------------------------------------------------------------------------------------------------------------------
 --Teleport
 local Teleport = Tabs.Teleport:AddSection("Teleport World")
