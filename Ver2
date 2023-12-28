@@ -2834,6 +2834,106 @@ end)
         end)
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+game:GetService('RunService').RenderStepped:connect(function()           
+    if _G.chestsea3 then
+   if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("God's Chalice") then 
+  _G.chestsea3 = false                      
+   elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("God's Chalice") then 
+     if game:GetService("Workspace"):FindFirstChild("Chest1") then
+    TPchest( game:GetService("Workspace"):FindFirstChild("Chest1").CFrame)
+    end
+    if game:GetService("Workspace"):FindFirstChild("Chest2") then
+    TPchest( game:GetService("Workspace"):FindFirstChild("Chest2").CFrame)
+    end
+    if game:GetService("Workspace"):FindFirstChild("Chest3") then
+TPchest( game:GetService("Workspace"):FindFirstChild("Chest3").CFrame)
+end
+end
+end
+end)
+if game.PlaceId == 7449423635 then -- sea3
+spawn(function()
+   while task.wait(3.5) do
+       pcall(function()
+       if not   game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("God's Chalice") then
+           if _G.chestsea3 then
+               game:GetService("VirtualInputManager"):SendKeyEvent(true,"Q",false,game)
+           game.Players.LocalPlayer.Character.Humanoid.Health = 0
+           end
+           wait(5)
+          end 
+        end)
+     end
+     end) 
+    end
+game:GetService('RunService').RenderStepped:connect(function()           
+    if _G.chestsea2 then
+   if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") then 
+       game:GetService("VirtualInputManager"):SendKeyEvent(true,"Q",false,game)
+  _G.chestsea2 = false                         
+   elseif not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") then 
+     if game:GetService("Workspace"):FindFirstChild("Chest1") then
+    TPchest( game:GetService("Workspace"):FindFirstChild("Chest1").CFrame)
+    end
+    if game:GetService("Workspace"):FindFirstChild("Chest2") then
+    TPchest( game:GetService("Workspace"):FindFirstChild("Chest2").CFrame)
+    end
+    if game:GetService("Workspace"):FindFirstChild("Chest3") then
+TPchest( game:GetService("Workspace"):FindFirstChild("Chest3").CFrame)
+end
+end
+end
+end)
+if game.PlaceId == 4442272183 then -- sea2
+spawn(function()
+   while task.wait(3.5) do
+       pcall(function()
+       if not   game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") then
+           if _G.chestsea2 then
+           game.Players.LocalPlayer.Character.Humanoid.Health = 0
+           end
+           wait(5)
+          end 
+        end) 
+    end 
+end) 
+end
+           
+function TPchest(P1)          
+            local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+              if Distance >= 0 then
+                Speed = 1200000
+                end
+                local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Distance/Speed), {CFrame = P1  }) tween:Play()                                    
+             end
+
+
+if Third_Sea then
+local ToggleChest = Tabs.Main:AddToggle("ToggleChest", {Title = "Auto Chest Stop If Has Items", Default = false })
+ToggleChest:OnChanged(function(Value)
+    _G.chestsea3 = Value
+end)
+Options.ToggleChest:SetValue(false)
+end
+
+if Second_Sea then
+local ToggleChest = Tabs.Main:AddToggle("ToggleChest", {Title = "Auto Chest Stop If Has Items", Default = false })
+ToggleChest:OnChanged(function(Value)
+    _G.chestsea2 = Value
+end)
+Options.ToggleChest:SetValue(false)
+end
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
       Tabs.Main:AddButton({
         Title = "Redeem All Code",
         Description = "Redeem all code x2 exp",
@@ -3214,7 +3314,14 @@ spawn(function()
 			end
 		end
     end)
-    end
+
+
+    local ToggleSpawnCake = Tabs.Main:AddToggle("ToggleSpawnCake", {Title = "Auto Spawn Cake Prince", Default = true })
+    ToggleSpawnCake:OnChanged(function(Value)
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
+    end)
+    Options.ToggleSpawnCake:SetValue(true)
+end
 
     if Second_Sea then
     local ToggleVatChatKiDi = Tabs.Main:AddToggle("ToggleVatChatKiDi", {Title = "Auto Ectoplasm", Default = false })
