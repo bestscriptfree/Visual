@@ -2941,7 +2941,7 @@ spawn(function()
 						if (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5000+_G.MagnitudeAdd then
 							repeat wait()
 								if game:GetService("Workspace"):FindFirstChild(v.Name) then
-									toTargetP(v.CFrame)
+									Tween(v.CFrame)
 								end
 							until AutoFarmChest == false or not v.Parent
 							Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
