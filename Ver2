@@ -2683,6 +2683,7 @@ end)
           if v.Name == Ms then
           repeat wait(_G.Fast_Delay)
           AttackNoCD()
+          bringmob = true
           AutoHaki()
           EquipTool(SelectWeapon)
           Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -2695,7 +2696,8 @@ end)
           MonFarm = v.Name
           --Click
           until not _G.AutoLevel or not v.Parent or v.Humanoid.Health <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false
-          end   
+          bringmob = false
+        end   
           end
           end
           for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
@@ -2732,6 +2734,7 @@ end)
 										 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 											 repeat wait(_G.Fast_Delay)
 												 AttackNoCD()
+                                                 bringmob = true
 												 AutoHaki()
 												 EquipTool(SelectWeapon)
 												 Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -2743,7 +2746,8 @@ end)
 												 FarmPos = v.HumanoidRootPart.CFrame
 												 MonFarm = v.Name
 											  until not _G.AutoCandy or not v.Parent or v.Humanoid.Health <= 0
-										  end
+                                              bringmob = false
+                                            end
 									  end
 								  end
 								Tween(CFrame.new(-16599.1484375, 154.2681121826172, -166.32186889648438))
@@ -2770,6 +2774,7 @@ end)
           if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v:FindFirstChild("HumanoidRootPart").Position).Magnitude <= 5000 then
             repeat wait(_G.Fast_Delay)
                 AttackNoCD()
+                bringmob = true
           AutoHaki()
           EquipTool(SelectWeapon)
           Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
@@ -2782,7 +2787,8 @@ end)
           MonFarm = v.Name
           --Click
           until not _G.AutoNear or not v.Parent or v.Humanoid.Health <= 0 or not game.Workspace.Enemies:FindFirstChild(v.Name)
-          end
+          bringmob = false
+        end
           end
           end
           end
@@ -2810,12 +2816,14 @@ end)
                                 if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
                                     repeat wait(_G.Fast_Delay)
                                         AttackNoCD()
+                                        bringmob = true
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                     until v.Humanoid.Health <= 0 or not v.Parent or not _G.CastleRaid
+                                    bringmob = false
                                 end
                             end
                         end
@@ -3164,6 +3172,7 @@ spawn(function()
       else
     _G.UseSkill = false
 	   AutoHaki()
+       bringmob = true
       EquipTool(SelectWeapon)
       Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
       v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -3177,6 +3186,7 @@ spawn(function()
       NormalAttack()
       end
       until not AutoFarmMasDevilFruit or not v.Parent or v.Humanoid.Health == 0 or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or not TypeMastery == 'Level'
+      bringmob = false
       _G.UseSkill = false
       
       end
@@ -3196,6 +3206,7 @@ spawn(function()
       else
         _G.UseSkill = false
 		AutoHaki()
+        bringmob = true
       EquipTool(SelectWeapon)
       Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
       v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -3211,6 +3222,7 @@ spawn(function()
        NormalAttack()
       end
       until not AutoFarmMasDevilFruit or not MasteryType == 'Near Mobs' or not v.Parent or v.Humanoid.Health == 0 or not TypeMastery == 'Near Mobs'
+      bringmob = false
       _G.UseSkill = false
       
     end
@@ -3261,6 +3273,7 @@ spawn(function()
                                         repeat wait(_G.Fast_Delay)
                                             AttackNoCD()
                                             AutoHaki()
+                                            bringmob = true
                                             EquipTool(SelectWeapon)
                                             Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
 			                                v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -3273,6 +3286,7 @@ spawn(function()
                                         until not _G.AutoBone or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                     else
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                        bringmob = false
                                     end
                                 end
                             end
@@ -3316,7 +3330,8 @@ spawn(function()
 										Tween(v.HumanoidRootPart.CFrame * Pos)
 										--Click
 									until _G.CakePrince == false or not v.Parent or v.Humanoid.Health <= 0
-								end    
+                                    bringmob = false
+                                end    
 							end    
 						else
 							Tween(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
@@ -3327,6 +3342,7 @@ spawn(function()
                                 if (v.Name == "Baking Staff" or v.Name == "Head Baker" or v.Name == "Cake Guard" or v.Name == "Cookie Crafter") and v.Humanoid.Health > 0 then
 									repeat wait()
 										AutoHaki()
+                                        bringmob = true
 										EquipTool(SelectWeapon)
 										v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)  
 										FarmPos = v.HumanoidRootPart.CFrame
@@ -3334,7 +3350,8 @@ spawn(function()
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
 										--Click
 									until _G.CakePrince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
-								end
+                                    bringmob = false
+                                end
 							end
 						else
 							Tween(CakeCFrame)
@@ -3371,6 +3388,7 @@ end
                                     repeat wait(_G.Fast_Delay)
                                         AttackNoCD()
                                         AutoHaki()
+                                        bringmob = true
                                         EquipTool(SelectWeapon)
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                         v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -3381,7 +3399,9 @@ end
                                         FarmPos = v.HumanoidRootPart.CFrame
                                         MonFarm = v.Name
                                         --Click
+                                
                                     until _G.Ectoplasm == false or not v.Parent or v.Humanoid.Health == 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name)
+                                    bringmob = false
                                 end
                             end
                         end
@@ -3439,6 +3459,7 @@ local boss = Tabs.Main:AddSection("Boss Farm")
                                     repeat wait(_G.Fast_Delay)
                                         AttackNoCD()
                                         AutoHaki()
+                                        bringmob = true
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
@@ -3446,6 +3467,7 @@ local boss = Tabs.Main:AddSection("Boss Farm")
                                         Tween(v.HumanoidRootPart.CFrame * Pos)
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     until not _G.AutoBoss or not v.Parent or v.Humanoid.Health <= 0
+                                    bringmob = false
                                 end
                             end
                         end
@@ -3472,13 +3494,16 @@ local boss = Tabs.Main:AddSection("Boss Farm")
                                     repeat wait(_G.Fast_Delay)
                                         AttackNoCD()
                                         AutoHaki()
+                                        bringmob = true
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
                                         Tween(v.HumanoidRootPart.CFrame * Pos)
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                               
                                     until not _G.AutoBoss or not v.Parent or v.Humanoid.Health <= 0
+                                    bringmob = false
                                 end
                             end
                         end
@@ -3548,6 +3573,7 @@ local boss = Tabs.Main:AddSection("Boss Farm")
             repeat wait(_G.Fast_Delay)
                 AttackNoCD()
           AutoHaki()
+          bringmob = true
           EquipTool(SelectWeapon)
           Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
           v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -3559,7 +3585,8 @@ local boss = Tabs.Main:AddSection("Boss Farm")
           MonFarm = v.Name
           --Click
           until not _G.AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
-          end
+          bringmob = false
+        end
           end
           end
           else
@@ -3755,8 +3782,6 @@ if Third_Sea then
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            
-                                        --Click
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                     until not _G.AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
                                 end
@@ -3799,8 +3824,6 @@ if Third_Sea then
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            
-                                        --Click
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                     until not _G.farmpiranya or not v.Parent or v.Humanoid.Health <= 0
                                 end
@@ -3842,7 +3865,6 @@ if Third_Sea then
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                            
                                         game.Players.LocalPlayer.Character.Humanoid.Sit = false
                                     until not _G.AutoShark or not v.Parent or v.Humanoid.Health <= 0
                                 end
@@ -4575,8 +4597,6 @@ end
                                         v.Humanoid.WalkSpeed = 0
                                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                                         Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                        --Click
-                                        sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
                                     until not _G.AutoCakeV2 or not v.Parent or v.Humanoid.Health <= 0
                                 end
                             end
@@ -4649,7 +4669,7 @@ local SettingFarm = Tabs.Setting:AddSection("Setting Farming")
     Options.ToggleFastAttack:SetValue(true)
 
 spawn(function()
-	while wait(.5) do
+	while wait(0.4) do
 		pcall(function()
 			if _G.FastAttackFaiFao then
 				repeat wait(_G.Fast_Delay)
@@ -4670,7 +4690,7 @@ Camera:Stop()
     Options.ToggleBringMob:SetValue(true)
 	task.spawn(function()
         while task.wait() do
-        if _G.BringMob then
+        if _G.BringMob and bringmob then
         pcall(function()
           for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
           if not string.find(v.Name,"Boss") and v.Name == MonFarm and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
