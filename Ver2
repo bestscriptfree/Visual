@@ -5032,13 +5032,13 @@ Options.ToggleQuanSat:SetValue(false)
 
 local Teleport = Tabs.Player:AddSection("Combat")
 
-local ToggleAimBotSkill = Tabs.Player:AddToggle("ToggleAimBotSkill", {Title = "Aimbot Skill", Default = false })
+local ToggleAimBotSkill = Tabs.Player:AddToggle("ToggleAimBotSkill", {Title = "Aimbot Skill ( Bug Wait Fix )", Default = false })
 ToggleAimBotSkill:OnChanged(function(Value)
     Skillaimbot = Value
 end)
 Options.ToggleAimBotSkill:SetValue(false)
 
-local ToggleAimbotGun = Tabs.Player:AddToggle("ToggleAimbotGun", {Title = "Aimbot Gun", Default = false })
+local ToggleAimbotGun = Tabs.Player:AddToggle("ToggleAimbotGun", {Title = "Aimbot Gun ( Bug Wait Fix )", Default = false })
 ToggleAimbotGun:OnChanged(function(Value)
     Aimbot = Value
 end)
@@ -5098,7 +5098,6 @@ task.spawn(function()
 end)
 -----------
 --aimbot gun
-
 local lp = game:GetService('Players').LocalPlayer
 local mouse = lp:GetMouse()
 mouse.Button1Down:Connect(function()
