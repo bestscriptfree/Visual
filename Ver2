@@ -6569,7 +6569,7 @@ spawn(function()
 
 
 
-
+    local Mastery = Tabs.Misc:AddSection("Kaitun Cap")
 
 Tabs.Misc:AddButton({
 	Title = "Show Items",
@@ -6807,6 +6807,26 @@ Tabs.Misc:AddButton({
 	end
 })
 
+local Mastery = Tabs.Misc:AddSection("Day")
+
+Tabs.Misc:AddButton({
+	Title = "Remove Fog",
+	Description = "",
+	Callback = function()
+        game:GetService("Lighting").LightingLayers:Destroy()
+        game:GetService("Lighting").Sky:Destroy()
+    end
+})
+
+Tabs.Misc:AddButton({
+	Title = "Always Day",
+	Description = "",
+	Callback = function()
+        game:GetService("RunService").Heartbeat:wait() do
+        game:GetService("Lighting").ClockTime = 12
+        end
+    end
+})
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Hop
 
