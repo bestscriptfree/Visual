@@ -2213,7 +2213,6 @@ if not _G.FastAttack then
     game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 end
 end
-
 --Sword Weapon
 function GetWeaponInventory(Weaponname)
 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
@@ -2227,7 +2226,6 @@ end
 end
 return false
 end
-
 ---Method Farm
 Type = 1
 spawn(function()
@@ -2395,35 +2393,26 @@ Main2.AddToggle({
 })
 task.spawn(function()
     while task.wait() do
-    if BringMobs then
+    if BringMobs and bringmob then
     pcall(function()
-		for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-				if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-					if v.Name == "Factory Staff" then
-						if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 250 then
-							v.Head.CanCollide = false
-							v.HumanoidRootPart.CanCollide = false
-							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-							v.HumanoidRootPart.CFrame = FarmPos
-							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-						end
-					elseif v.Name == MonFarm then
-						if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 400 then
-							v.Head.CanCollide = false
-							v.HumanoidRootPart.CanCollide = false
-							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-							v.HumanoidRootPart.CFrame = FarmPos
-							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+      for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+      if not string.find(v.Name,"Boss") and v.Name == MonFarm and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
+      if InMyNetWork(v.HumanoidRootPart) then
+        if InMyNetWork(v.HumanoidRootPart) then
+      v.HumanoidRootPart.CFrame = FarmPos
+      v.HumanoidRootPart.CanCollide = false
+      v.HumanoidRootPart.Size = Vector3.new(1,1,1)
+      if v.Humanoid:FindFirstChild("Animator") then
+        v.Humanoid.Animator:Destroy()
+    end
       end
     end
       end
       end
       end)
     end
-
 end
     end)
-  
   task.spawn(function()
     while true do wait()
     if setscriptable then
@@ -2434,12 +2423,11 @@ end
     end
     end
     end)
-  
   function InMyNetWork(object)
   if isnetworkowner then
   return isnetworkowner(object)
   else
-    if (object.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 250 then
+    if (object.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
   return true
   end
   return false
@@ -2657,7 +2645,7 @@ spawn(function()
     v.HumanoidRootPart.CanCollide = false
     FarmPos = v.HumanoidRootPart.CFrame
     MonFarm = v.Name
-  Click()
+    Click()
 	BringMobs = false
     until not AutoCakePrince or not v.Parent or v.Humanoid.Health <= 0
 	BringMobs = true
