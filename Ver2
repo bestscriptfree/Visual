@@ -9,7 +9,7 @@ local Window = Fluent:CreateWindow({
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 350),
     Acrylic = false,
-    Theme = "Darker",
+    Theme = "Dark",
     MinimizeKey = Enum.KeyCode.End
 })
 local Tabs = {
@@ -4646,18 +4646,18 @@ Camera:Stop()
                         if _G.BringMob and bringmob then
                             if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == "Factory Staff" then
-                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 300 then
+                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 500 then
                                         v.Head.CanCollide = false
                                         v.HumanoidRootPart.CanCollide = false
-                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                        v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                         v.HumanoidRootPart.CFrame = FarmPos
                                         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                     end
                                 elseif v.Name == MonFarm then
-                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 300 then
+                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 500 then
                                         v.Head.CanCollide = false
                                         v.HumanoidRootPart.CanCollide = false
-                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                        v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                         v.HumanoidRootPart.CFrame = FarmPos
                                         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                     end
@@ -6271,6 +6271,7 @@ spawn(function()
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Cocoa Warrior" or v.Name == "Chocolate Bar Battler" or v.Name == "Sweet Thief" or v.Name == "Candy Rebel" then
                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                    bringmob = true
                                     repeat wait(_G.Fast_Delay)
                                     AttackNoCD()
                                     AutoHaki()
@@ -6282,6 +6283,7 @@ spawn(function()
                                     MonFarm = v.Name
                                     Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
                                 until not AutoFarmAcient or not v.Parent or v.Humanoid.Health <= 0
+                          bringmob = false
                             end
                         end
                     end
