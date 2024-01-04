@@ -4633,6 +4633,7 @@ end)
 local Camera = require(game.ReplicatedStorage.Util.CameraShaker)
 Camera:Stop()
 
+
     local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title = " Enable Bring Mob / Magnet", Default = true })
     ToggleBringMob:OnChanged(function(Value)
         _G.BringMob = Value
@@ -6570,6 +6571,27 @@ function Hop()
 	Teleport()
 end      
 
+
+local Mastery = Tabs.Misc:AddSection("Team")
+
+
+Tabs.Misc:AddButton({
+	Title = "Join Pirates Team",
+	Description = "",
+	Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates") 
+	end
+})
+
+
+Tabs.Misc:AddButton({
+	Title = "Join Marines Team",
+	Description = "",
+	Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines") 
+	end
+})
+
 local Mastery = Tabs.Misc:AddSection("Open Ui")
 
 Tabs.Misc:AddButton({
@@ -6909,7 +6931,7 @@ Tabs.Misc:AddButton({
 	Description = "",
 	Callback = function()
         game:GetService("Lighting").LightingLayers:Destroy()
-        game:GetService("Lighting").Sky:Destroy()
+	    game:GetService("Lighting").Sky:Destroy()
     end
 })
 
