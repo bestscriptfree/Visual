@@ -3290,7 +3290,8 @@ spawn(function()
                         if game.Workspace.Enemies:FindFirstChild("Baking Staff") or game.Workspace.Enemies:FindFirstChild("Head Baker") or game.Workspace.Enemies:FindFirstChild("Cake Guard") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter")  then
                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do  
                                 if (v.Name == "Baking Staff" or v.Name == "Head Baker" or v.Name == "Cake Guard" or v.Name == "Cookie Crafter") and v.Humanoid.Health > 0 then
-									repeat wait()
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCD()
 										AutoHaki()
                                         bringmob = true
 										EquipTool(SelectWeapon)
@@ -3298,7 +3299,6 @@ spawn(function()
 										FarmPos = v.HumanoidRootPart.CFrame
                                         MonFarm = v.Name
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-										--Click
 									until _G.CakePrince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
                                     bringmob = false
                                 end
