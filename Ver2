@@ -4605,7 +4605,6 @@ end)
 local Camera = require(game.ReplicatedStorage.Util.CameraShaker)
 Camera:Stop()
 
-
     local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title = " Enable Bring Mob / Magnet", Default = true })
     ToggleBringMob:OnChanged(function(Value)
         _G.BringMob = Value
@@ -4623,14 +4622,20 @@ Camera:Stop()
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                         v.HumanoidRootPart.CFrame = FarmPos
+                                        if v.Humanoid:FindFirstChild("Animator") then
+                                            v.Humanoid.Animator:Destroy()
+                                        end
                                         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                     end
                                 elseif v.Name == MonFarm then
-                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 500 then
+                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 450 then
                                         v.Head.CanCollide = false
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                         v.HumanoidRootPart.CFrame = FarmPos
+                                        if v.Humanoid:FindFirstChild("Animator") then
+                                            v.Humanoid.Animator:Destroy()
+                                        end
                                         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                     end
                                 end
@@ -4650,13 +4655,13 @@ Camera:Stop()
 
 local ToggleRemove = Tabs.Setting:AddToggle("ToggleRemove", {Title = " Enable Remove Dame Text", Default = true })
 ToggleRemove:OnChanged(function(Value)
-    FaiFaoRemovetext = Value
+    _G.RemoveDameText = Value
     end)
     Options.ToggleRemove:SetValue(true)
 
     spawn(function()
         while wait() do
-            if FaiFaoRemovetext then
+            if _G.RemoveDameText then
                 game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = false
             else
                 game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = true
