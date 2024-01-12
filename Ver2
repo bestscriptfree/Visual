@@ -3287,10 +3287,26 @@ spawn(function()
 
     local ToggleSpawnCake = Tabs.Main:AddToggle("ToggleSpawnCake", {Title = "Auto Spawn Cake Prince", Default = true })
     ToggleSpawnCake:OnChanged(function(Value)
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
+      _G.SpawnCakePrince = Value
     end)
     Options.ToggleSpawnCake:SetValue(true)
 end
+
+spawn(function()
+  while wait() do
+    if _G.SpawnCakePrince then
+      local args = {
+        [1] = "CakePrinceSpawner",
+        [2] = true
+      }
+      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))                    
+      local args = {
+        [1] = "CakePrinceSpawner"
+      }
+      game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    end
+  end
+end)
 
     if Second_Sea then
     local ToggleVatChatKiDi = Tabs.Main:AddToggle("ToggleVatChatKiDi", {Title = "Auto Ectoplasm", Default = false })
@@ -4617,7 +4633,7 @@ Camera:Stop()
                         if _G.BringMob and bringmob then
                             if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == "Factory Staff" then
-                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 500 then
+                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 360 then
                                         v.Head.CanCollide = false
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -4628,7 +4644,7 @@ Camera:Stop()
                                         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                     end
                                 elseif v.Name == MonFarm then
-                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 450 then
+                                    if (v.HumanoidRootPart.Position - FarmPos.Position).Magnitude <= 310 then
                                         v.Head.CanCollide = false
                                         v.HumanoidRootPart.CanCollide = false
                                         v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -5031,9 +5047,46 @@ mouse.Button1Down:Connect(function()
 end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------
---[[
-local Mastery = Tabs.Player:AddSection("Misc Pvp")
+local Mastery = Tabs.Player:AddSection("Misc")
 
+local ToggleWalkonWater = Tabs.Player:AddToggle("ToggleWalkonWater", {Title = "Walk on Water", Default = true })
+ToggleWalkonWater:OnChanged(function(Value)
+  _G.WalkonWater = Value
+end)
+Options.ToggleWalkonWater:SetValue(true)
+spawn(function()
+  while task.wait() do
+    pcall(function()
+      if _G.WalkonWater then
+        game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
+      else
+        game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
+      end
+    end)
+  end
+end)
+
+
+local ToggleEnablePvp = Tabs.Player:AddToggle("ToggleEnablePvp", {Title = "Auto Enable PVP", Default = false })
+ToggleEnablePvp:OnChanged(function(Value)
+  _G.EnabledPvP = Value
+end)
+Options.ToggleEnablePvp:SetValue(false)
+
+spawn(function()
+  pcall(function()
+      while wait() do
+          if _G.EnabledPvP then
+              if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+                  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+              end
+          end
+      end
+  end)
+end)
+
+
+--[[
 local ToggleSoruNOCD = Tabs.Player:AddToggle("ToggleSoruNOCD", {Title = "Soru No Cooldown", Default = false })
 ToggleSoruNOCD:OnChanged(function(Value)
     _G.SoruNoCd = Value
